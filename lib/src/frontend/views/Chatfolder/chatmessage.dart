@@ -35,6 +35,7 @@ class _ChatMessageState extends State<ChatMessage> {
   @override
   Widget build(BuildContext context) {
     var searchBloc = Provider.of<SearchBloc>(context);
+    sender = _db.currentUser;
     return Scaffold(
       appBar: appBar(context, searchBloc),
       body: Column(
