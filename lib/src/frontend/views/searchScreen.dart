@@ -64,12 +64,14 @@ class _SearchScreenState extends State<SearchScreen> {
                       ),
                     );
                   List<MyUser> fliteruser = [];
-                  for (var user in userResult) {
-                    if (user.displayName
-                            .toLowerCase()
-                            .contains(snapshot.data) ||
-                        user.email.toLowerCase().contains(snapshot.data)) {
-                      fliteruser.add(user);
+                  if (userResult.isNotEmpty) {
+                    for (var user in userResult) {
+                      if (user.displayName
+                              .toLowerCase()
+                              .contains(snapshot.data) ||
+                          user.email.toLowerCase().contains(snapshot.data)) {
+                        fliteruser.add(user);
+                      }
                     }
                   }
                   return ListView.builder(
@@ -86,11 +88,11 @@ class _SearchScreenState extends State<SearchScreen> {
                             child: Text('${index + 1}'),
                           ),
                           subtitle: Text(
-                            userInfo.email,
+                            userInfo.email ?? ' ',
                             style: TextStyles.appTileSubtilte,
                           ),
                           title: Text(
-                            userInfo.displayName,
+                            userInfo.displayName ?? ' ',
                             style: TextStyles.appTileTitle,
                           ),
                         );

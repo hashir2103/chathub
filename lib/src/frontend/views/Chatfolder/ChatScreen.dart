@@ -19,13 +19,15 @@ class _ChatScreenState extends State<ChatScreen> {
   MyUser user;
   @override
   void initState() {
+    var _db = Provider.of<FirebaseServices>(context,listen: false);
+    setState(() {
+      user = _db.currentUser;
+    });
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    var _db = Provider.of<FirebaseServices>(context);
-    user = _db.currentUser;
     var searchBloc = Provider.of<SearchBloc>(context);
     return StreamBuilder<bool>(
         initialData: false,
@@ -33,7 +35,7 @@ class _ChatScreenState extends State<ChatScreen> {
         builder: (context, snapshot) {
           return Scaffold(
             backgroundColor: AppColor.blackColor,
-            appBar: AppAppBar(displayName: user.displayName),
+            appBar: AppAppBar(displayName: user.displayName ?? ' '),
             body: (!snapshot.hasData)
                 ? chatContainer(user)
                 : Stack(

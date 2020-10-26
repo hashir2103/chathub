@@ -57,7 +57,7 @@ class _AppAppBarState extends State<AppAppBar> {
                           child: CircleAvatar(
                               radius: 25,
                               backgroundColor: AppColor.separatorColor,
-                              child: Text(widget.displayName[0],
+                              child: Text(widget.displayName[0]?? " ",
                                   style: TextStyles.chatAppBarTitle)),
                         ),
                       ]),

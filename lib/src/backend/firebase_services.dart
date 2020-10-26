@@ -11,7 +11,7 @@ class FirebaseServices {
   MyUser myuser;
 
   MyUser get currentUser => MyUser(
-      displayName: _auth.currentUser.displayName,
+      displayName: _auth.currentUser.displayName ?? " ",
       email: _auth.currentUser.email,
       uid: _auth.currentUser.uid,
       photoUrl: _auth.currentUser.photoURL,
@@ -51,7 +51,7 @@ class FirebaseServices {
     var userdata = user.user;
     myuser = MyUser(
         uid: userdata.uid,
-        displayName: userdata.displayName,
+        displayName: userdata.displayName ?? "Name",
         email: userdata.email,
         phoneNumber: userdata.phoneNumber,
         photoUrl: userdata.photoURL);

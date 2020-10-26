@@ -18,7 +18,7 @@ class MyUser {
       'uid': user.uid,
       'phoneNumber': user.phoneNumber,
       'email': user.email,
-      'displayName': user.displayName,
+      'displayName': user.displayName ?? ' ',
       'photoUrl': user.photoUrl
     };
   }
@@ -30,6 +30,6 @@ class MyUser {
       phoneNumber: firestore['phoneNumber'],
       email: firestore['email'],
       photoUrl: firestore['photoUrl'],
-      displayName: firestore['displayName']);
+      displayName: firestore['displayName']?? " ");
   }
 }

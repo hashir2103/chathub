@@ -37,7 +37,7 @@ class _MyAppState extends State<MyApp> {
       onGenerateRoute: Routes.materialPageRoute,
       debugShowCheckedModeBanner: false,
       home: Scaffold(
-        body: (_auth.currentUser == null)
+        body:(_auth.currentUser.email.isEmpty)
         ? LoginScreen()
         : HomeScreen(),
       ),

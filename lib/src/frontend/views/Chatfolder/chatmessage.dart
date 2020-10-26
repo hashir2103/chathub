@@ -79,7 +79,7 @@ class _ChatMessageState extends State<ChatMessage> {
               reverse: true,
               itemCount: snapshot.data.length,
               itemBuilder: (context, index) {
-                return MessageContianer(
+                return MessageContianer(receiver: widget.receiver,
                     currentUser: sender, message: snapshot.data[index]);
               });
         });
@@ -98,7 +98,7 @@ class _ChatMessageState extends State<ChatMessage> {
             width: 15,
           ),
           Text(
-            widget.receiver.displayName,
+            widget.receiver.displayName ?? ' ',
             style: TextStyles.chatAppBarTitle,
           ),
         ],
