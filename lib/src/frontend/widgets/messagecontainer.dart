@@ -62,10 +62,14 @@ class _MessageContianerState extends State<MessageContianer> {
                   // overflow:TextOverflow.visible,
                   style: TextStyles.message,
                 ),
+                SizedBox(
+                  height: 5,
+                ),
                 Text(
                   time ?? "",
                   style: TextStyles.smallText,
                 ),
+                
               ],
             ),
           )),
