@@ -7,11 +7,11 @@ class FirebaseStorageService {
   final storage = FirebaseStorage.instance;
 
   Future<String> uploadProductImage(
-      {@required File file}) async {
+      {@required File file,String senderId, String recieverId}) async {
     try {
       var snapshot = await storage
           .ref()
-          .child('${DateTime.now().millisecondsSinceEpoch}')
+          .child('$senderId-$recieverId-${DateTime.now()}')
           .putFile(file)
           .onComplete;
 

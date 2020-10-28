@@ -91,7 +91,7 @@ class ChatBloc {
 
         changeImgUploading(true);
         var imageUrl =
-            await storageService.uploadProductImage(file: compressedFile);
+            await storageService.uploadProductImage(file: compressedFile,senderId: senderId, recieverId: recieverId);
         _db.setImageMsg(
             url: imageUrl, senderId: senderId, recieverId: recieverId);
         changeNoImgUrl(imageUrl);
