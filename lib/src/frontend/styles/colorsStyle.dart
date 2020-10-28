@@ -4,7 +4,7 @@ abstract class AppColor {
   static Color get red => const Color(0xFFee5253);
   static Color get blueColor => const Color(0xff2b9ed4);
   static Color get darkblue => const Color(0xFF263a44);
-  // static Color get darkgray => const Color(0xFF4e5b60);
+  static Color get darkgray => const Color(0xFF4e5b60);
   // static Color get lightgray => const Color(0xFFca8d6ef);
   // static Color get lightblue => const Color(0xFF48a1af);
   // static Color get straw => const Color(0xFFe2a84b);

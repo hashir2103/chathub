@@ -1,5 +1,6 @@
 import 'package:chathub/src/backend/firebase_services.dart';
 import 'package:chathub/src/backend/routes.dart';
+import 'package:chathub/src/controller/bloc/chatBloc.dart';
 import 'package:chathub/src/controller/bloc/searchbloc.dart';
 import 'package:chathub/src/frontend/styles/colorsStyle.dart';
 import 'package:chathub/src/frontend/views/HomeScreen.dart';
@@ -25,7 +26,8 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MultiProvider(providers: [
       Provider(create: (context) => FirebaseServices()),
-      Provider(create: (context)=>SearchBloc())
+      Provider(create: (context)=>SearchBloc()),
+      Provider(create: (context)=>ChatBloc()),
     ],
     child: MaterialApp(
       theme: ThemeData(

@@ -1,4 +1,5 @@
 import 'package:chathub/src/backend/firebase_services.dart';
+import 'package:chathub/src/controller/bloc/chatBloc.dart';
 import 'package:chathub/src/controller/bloc/searchbloc.dart';
 import 'package:chathub/src/controller/models/message.dart';
 import 'package:chathub/src/controller/models/userModel.dart';
@@ -6,10 +7,12 @@ import 'package:chathub/src/frontend/styles/baseStyle.dart';
 import 'package:chathub/src/frontend/styles/colorsStyle.dart';
 import 'package:chathub/src/frontend/styles/textstyle.dart';
 import 'package:chathub/src/frontend/widgets/AppTextField.dart';
+import 'package:chathub/src/frontend/widgets/ImageContainer.dart';
 import 'package:chathub/src/frontend/widgets/MyAppBar.dart';
 import 'package:chathub/src/frontend/widgets/messagecontainer.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 
 class ChatMessage extends StatefulWidget {
@@ -49,12 +52,86 @@ class _ChatMessageState extends State<ChatMessage> {
             textInputType: TextInputType.multiline,
             hintText: "Type Message..",
             prefixIcon: Icons.photo_camera,
+            prefixPressed: showOptions,
             suffixIcon: Icons.send,
             suffixPressed: sendMessage,
           ),
         ],
       ),
     );
+  }
+
+  showOptions() {
+    var chatBloc = Provider.of<ChatBloc>(context, listen: false);
+    showModalBottomSheet(
+        backgroundColor: AppColor.blackColor,
+        context: context,
+        builder: (context) {
+          return Container(
+            color: AppColor.separatorColor,
+            child: AnimatedContainer(
+                duration: Duration(milliseconds: 400),
+                margin: EdgeInsets.symmetric(horizontal: 3, vertical: 1.5),
+                // height: MediaQuery.of(context).size.height * 0.1,
+                decoration: BoxDecoration(
+                    color: AppColor.separatorColor,
+                    borderRadius: BorderRadius.only(
+                        // topLeft: Radius.circular(BaseStyle.borderRaduis),
+                        // topRight: Radius.circular(BaseStyle.borderRaduis),
+                        )),
+                child: GridView(
+                  // padding: EdgeInsets.all(MediaQuery.of(context).size.width*0.05),
+                  shrinkWrap: true,
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 3),
+                  children: [
+                    Center(
+                      child: CircleAvatar(
+                        backgroundColor: AppColor.blueColor,
+                        radius: BaseStyle.avatarRadius,
+                        child: IconButton(
+                            icon: BaseStyle.myIcon(Icons.camera_alt),
+                            onPressed: () {
+                              chatBloc.pickImage(
+                                ImageSource.camera,
+                                senderId: sender.uid,
+                                recieverId: widget.receiver.uid,
+                              );
+                              Navigator.of(context).pop();
+                            }),
+                      ),
+                    ),
+                    Center(
+                      child: CircleAvatar(
+                        backgroundColor: AppColor.red,
+                        radius: BaseStyle.avatarRadius,
+                        child: IconButton(
+                            icon: BaseStyle.myIcon(Icons.perm_media),
+                            onPressed: () {
+                              chatBloc.pickImage(
+                                ImageSource.gallery,
+                                senderId: sender.uid,
+                                recieverId: widget.receiver.uid,
+                              );
+                              Navigator.of(context).pop();
+                            }),
+                      ),
+                    ),
+                    Center(
+                      child: CircleAvatar(
+                        backgroundColor: Colors.green.withOpacity(0.5),
+                        radius: BaseStyle.avatarRadius,
+                        child: IconButton(
+                            icon: BaseStyle.myIcon(Icons.location_on),
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            }),
+                      ),
+                    ),
+                  ],
+                )),
+          );
+        });
   }
 
   sendMessage() {
@@ -79,20 +156,24 @@ class _ChatMessageState extends State<ChatMessage> {
               reverse: true,
               itemCount: snapshot.data.length,
               itemBuilder: (context, index) {
-                return MessageContianer(receiver: widget.receiver,
-                    currentUser: sender, message: snapshot.data[index]);
+                return(snapshot.data[index]['type']=='image')
+                ? ImageContainer(receiver: widget.receiver,currentUser: sender,message:snapshot.data[index])
+                : MessageContianer(
+                    receiver: widget.receiver,
+                    currentUser: sender,
+                    message: snapshot.data[index]);
               });
         });
   }
 
-  appBar(context, SearchBloc searchBloc) {
+  MyAppBar appBar(context, SearchBloc searchBloc) {
     return MyAppBar(
       title: Row(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           CircleAvatar(
             backgroundColor: AppColor.userCircleBackground,
-            radius: BaseStyle.avatarRadius,
+            radius:BaseStyle.avatarRadius - 5,
           ),
           SizedBox(
             width: 15,

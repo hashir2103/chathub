@@ -41,5 +41,11 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>To Share Media File</string>
+	<key>NSCameraUsageDescription</key>
+	<string>So you can take picture and send it</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>To Share Media File</string>
 </dict>
 </plist>

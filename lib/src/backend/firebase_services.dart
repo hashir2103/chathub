@@ -104,4 +104,28 @@ class FirebaseServices {
         .map((snapdoc) => snapdoc.map((e) => e.data()).toList());
         // print("Data from firebase : ${e.data()}");
   }
+
+  setImageMsg({String url, String senderId, String recieverId}) async {
+    Message _message;
+    _message = Message.imageMessage(
+        message: "IMAGE",
+        senderId: senderId,
+        receiverId: recieverId,
+        photoUrl: url,
+        timestamp: FieldValue.serverTimestamp(),
+        type: 'image');
+    var map = _message.toImageMap();
+    await _db
+        .collection("messages")
+        .doc(_message.senderId)
+        .collection(_message.receiverId)
+        .add(map);
+
+    return await _db
+        .collection("messages")
+        .doc(_message.receiverId)
+        .collection(_message.senderId)
+        .add(map);
+
+  }
 }

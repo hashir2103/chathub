@@ -5,6 +5,7 @@ import 'package:chathub/src/frontend/views/ContactScreen.dart';
 import 'package:chathub/src/frontend/views/HomeScreen.dart';
 import 'package:chathub/src/frontend/views/LoginScreen.dart';
 import 'package:chathub/src/frontend/views/searchScreen.dart';
+import 'package:chathub/src/frontend/widgets/ImageContainer.dart';
 import 'package:flutter/material.dart';
 
 abstract class Routes {
@@ -27,6 +28,9 @@ abstract class Routes {
         
       case '/chatmessage':
         return MaterialPageRoute(builder: (context) => ChatMessage(receiver: settings.arguments,));
+        
+      case '/showimage':
+        return MaterialPageRoute(builder: (context) => ShowImage(url: settings.arguments,));
         
 
       default:

@@ -34,6 +34,17 @@ class Message {
     return map;
   }
 
+  Map toImageMap() {
+    var map = Map<String, dynamic>();
+    map['message'] = this.message;
+    map['senderId'] = this.senderId;
+    map['receiverId'] = this.receiverId;
+    map['type'] = this.type;
+    map['timestamp'] = this.timestamp;
+    map['photoUrl'] = this.photoUrl;
+    return map;
+  }
+
    factory Message.fromFirebase(Map<String, dynamic> map) {
     return Message(
         senderId: map['senderId'],

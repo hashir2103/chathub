@@ -34,9 +34,6 @@ class _MessageContianerState extends State<MessageContianer> {
 
   @override
   Widget build(BuildContext context) {
-    print("============Currentuser: ${widget.currentUser.uid}=========");
-    print("============MessageId : ${widget.message['senderId']}=========");
-    print("============Message: ${widget.message['message']}=========");
     if (widget.currentUser.uid.trim() == widget.message['senderId'].trim()) {
       setState(() {
         sender = true;
@@ -49,7 +46,6 @@ class _MessageContianerState extends State<MessageContianer> {
             margin: EdgeInsets.only(bottom: 12, left: 7, right: 7),
             padding: EdgeInsets.all(8),
             decoration: BoxDecoration(
-              
                 borderRadius: BorderRadius.only(
                   bottomRight:
                       (sender) ? Radius.circular(25) : Radius.circular(0),
@@ -60,34 +56,27 @@ class _MessageContianerState extends State<MessageContianer> {
                 ),
                 border: Border.all(width: 2.5, color: AppColor.separatorColor)),
             child: Container(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  // Text(
-                  //   widget.currentUser.displayName ?? " ",
-                  //   // : widget.receiver.displayName ?? ' ',
-                  //   // overflow:TextOverflow.visible,
-                  //   style: TextStyles.smallText,
-                  // ),
-                  SizedBox(
-                    height: 5,
-                  ),
-                  Text(
-                    widget.message['message'],
-                    // overflow:TextOverflow.visible,
-                    style: TextStyles.message,
-                  ),
-                  SizedBox(
-                    height: 5,
-                  ),
-                  Text(
-                    time ?? "",
-                    style: TextStyles.smallText,
-                  ),
-                ],
-              ),
-            )),
-      );
+              child: Container(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                Text(
+                  widget.message['message'],
+                  // overflow:TextOverflow.visible,
+                  style: TextStyles.message,
+                ),
+                SizedBox(
+                  height: 5,
+                ),
+                Text(
+                  time ?? "",
+                  style: TextStyles.smallText,
+                ),
+              ],
+            ),
+          ) 
+            ),
+      ));
     }
     setState(() {
       sender = false;
@@ -113,15 +102,6 @@ class _MessageContianerState extends State<MessageContianer> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
-                // Text(
-                //   // widget.currentUser.displayName ?? " ",
-                //   widget.receiver.displayName ?? ' ',
-                //   // overflow:TextOverflow.visible,
-                //   style: TextStyles.smallText,
-                // ),
-                SizedBox(
-                  height: 5,
-                ),
                 Text(
                   widget.message['message'],
                   // overflow:TextOverflow.visible,
