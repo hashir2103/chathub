@@ -10,16 +10,13 @@ class CachedImage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 200,
-          child: ClipRRect(
-        borderRadius: BorderRadius.circular(5),
+    return ClipRRect(
+        borderRadius: BorderRadius.circular(10),
         child: CachedNetworkImage(
           imageUrl: url,
           placeholder: (context, url) =>
               Center(child: CircularProgressIndicator()),
         ),
-      ),
     );
   }
 } 

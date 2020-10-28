@@ -47,5 +47,17 @@
 	<string>So you can take picture and send it</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>To Share Media File</string>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<!-- Copied from GoogleService-Info.plist key REVERSED_CLIENT_ID -->
+				<string>com.googleusercontent.apps.574821266521-163grcu697ul1s3qloskr3s5t7cv6blg</string>
+			</array>
+		</dict>
+	</array>
 </dict>
 </plist>

@@ -43,11 +43,11 @@ class _ImageContainerState extends State<ImageContainer> {
           alignment: Alignment.centerRight,
           child: Container(
               constraints: BoxConstraints(
+                maxHeight: MediaQuery.of(context).size.height*0.3,
                   maxWidth: MediaQuery.of(context).size.width * 0.60),
               margin: EdgeInsets.only(bottom: 12, left: 7, right: 7),
-              padding: EdgeInsets.all(8),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.end,
+              // padding: EdgeInsets.all(8),
+              child: Stack(
                 children: [
                   GestureDetector(
                       onTap: () => Navigator.pushNamed(context, '/showimage',
@@ -58,8 +58,9 @@ class _ImageContainerState extends State<ImageContainer> {
                               child: CircularProgressIndicator(),
                             ),
                       )),
-                  Align(
-                    alignment: Alignment.bottomRight,
+                  Positioned(
+                    bottom: 3,
+                    right: 3,
                     child: Text(
                       time ?? '',
                       style: TextStyles.smallText,
@@ -75,10 +76,11 @@ class _ImageContainerState extends State<ImageContainer> {
       alignment: Alignment.centerLeft,
       child: Container(
           constraints: BoxConstraints(
+            maxHeight: MediaQuery.of(context).size.height*0.3,
               maxWidth: MediaQuery.of(context).size.width * 0.60),
           margin: EdgeInsets.only(bottom: 12, left: 7, right: 7),
-          padding: EdgeInsets.all(8),
-          child: Column(
+          // padding: EdgeInsets.all(8),
+          child: Stack(
             children: [
               GestureDetector(
                 onTap: () => Navigator.pushNamed(context, '/showimage',
@@ -87,8 +89,9 @@ class _ImageContainerState extends State<ImageContainer> {
                     child: CachedImage(url: widget.message['photoUrl']) ??
                         Center(child: CircularProgressIndicator())),
               ),
-              Align(
-                alignment: Alignment.bottomRight,
+              Positioned(
+                bottom: 3,
+                right: 3,
                 child: Text(
                   time ?? '',
                   style: TextStyles.smallText,

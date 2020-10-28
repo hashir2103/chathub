@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:chathub/src/backend/firebase_services.dart';
 import 'package:chathub/src/controller/bloc/chatBloc.dart';
 import 'package:chathub/src/controller/bloc/searchbloc.dart';
@@ -26,13 +28,21 @@ class ChatMessage extends StatefulWidget {
 class _ChatMessageState extends State<ChatMessage> {
   MyUser sender;
   FirebaseServices _db;
+  FocusNode focusNode;
   TextEditingController _controller = TextEditingController();
 
   @override
   void initState() {
     _db = Provider.of<FirebaseServices>(context, listen: false);
     sender = _db.currentUser;
+    focusNode = FocusNode();
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    focusNode.dispose();
+    super.dispose();
   }
 
   @override
@@ -47,14 +57,50 @@ class _ChatMessageState extends State<ChatMessage> {
             height: 10,
           ),
           Expanded(child: messageList()),
-          AppTextField(
-            controller: _controller,
-            textInputType: TextInputType.multiline,
-            hintText: "Type Message..",
-            prefixIcon: Icons.photo_camera,
-            prefixPressed: showOptions,
-            suffixIcon: Icons.send,
-            suffixPressed: sendMessage,
+          Container(
+            margin: EdgeInsets.all(7),
+            decoration: BoxDecoration(
+                // boxShadow: kElevationToShadow[2],
+                border: Border.all(color: AppColor.iconColors, width: 1),
+                borderRadius: BorderRadius.circular(20)),
+            height: 70,
+            child: Stack(
+              children: [
+                AppTextField(
+                  focusNode: focusNode,
+                  controller: _controller,
+                  textInputType: TextInputType.multiline,
+                  hintText: "Type Message..",
+                ),
+                Container(
+                  margin: EdgeInsets.only(left: 7),
+                  child: Align(
+                    alignment: Alignment.centerLeft,
+                    child: GestureDetector(
+                        onTap: showOptions,
+                        child: CircleAvatar(
+                            backgroundColor: AppColor.darkblue,
+                            child: Transform.rotate(
+                                angle: -pi / 4,
+                                child: BaseStyle.myIcon(Icons.attach_file)))),
+                    // )
+                  ),
+                ),
+                Container(
+                  margin: EdgeInsets.only(right: 7),
+                  child: Align(
+                      alignment: Alignment.centerRight,
+                      child: GestureDetector(
+                          onTap: sendMessage,
+                          child: CircleAvatar(
+                              backgroundColor:
+                                  AppColor.blueColor.withOpacity(0.5),
+                              child: Transform.rotate(
+                                  angle: 0,
+                                  child: BaseStyle.myIcon(Icons.send))))),
+                )
+              ],
+            ),
           ),
         ],
       ),
@@ -67,6 +113,7 @@ class _ChatMessageState extends State<ChatMessage> {
         backgroundColor: AppColor.blackColor,
         context: context,
         builder: (context) {
+          FocusScope.of(context).unfocus();
           return Container(
             color: AppColor.separatorColor,
             child: AnimatedContainer(
@@ -97,7 +144,9 @@ class _ChatMessageState extends State<ChatMessage> {
                                 senderId: sender.uid,
                                 recieverId: widget.receiver.uid,
                               );
+                              FocusScope.of(context).unfocus();
                               Navigator.of(context).pop();
+                            
                             }),
                       ),
                     ),
@@ -113,6 +162,7 @@ class _ChatMessageState extends State<ChatMessage> {
                                 senderId: sender.uid,
                                 recieverId: widget.receiver.uid,
                               );
+                              FocusScope.of(context).unfocus();
                               Navigator.of(context).pop();
                             }),
                       ),
@@ -124,6 +174,7 @@ class _ChatMessageState extends State<ChatMessage> {
                         child: IconButton(
                             icon: BaseStyle.myIcon(Icons.location_on),
                             onPressed: () {
+                              FocusScope.of(context).unfocus();
                               Navigator.of(context).pop();
                             }),
                       ),
@@ -156,12 +207,15 @@ class _ChatMessageState extends State<ChatMessage> {
               reverse: true,
               itemCount: snapshot.data.length,
               itemBuilder: (context, index) {
-                return(snapshot.data[index]['type']=='image')
-                ? ImageContainer(receiver: widget.receiver,currentUser: sender,message:snapshot.data[index])
-                : MessageContianer(
-                    receiver: widget.receiver,
-                    currentUser: sender,
-                    message: snapshot.data[index]);
+                return (snapshot.data[index]['type'] == 'image')
+                    ? ImageContainer(
+                        receiver: widget.receiver,
+                        currentUser: sender,
+                        message: snapshot.data[index])
+                    : MessageContianer(
+                        receiver: widget.receiver,
+                        currentUser: sender,
+                        message: snapshot.data[index]);
               });
         });
   }
@@ -173,7 +227,7 @@ class _ChatMessageState extends State<ChatMessage> {
         children: [
           CircleAvatar(
             backgroundColor: AppColor.userCircleBackground,
-            radius:BaseStyle.avatarRadius - 5,
+            radius: BaseStyle.avatarRadius - 5,
           ),
           SizedBox(
             width: 15,

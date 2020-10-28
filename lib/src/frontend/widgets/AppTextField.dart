@@ -1,5 +1,4 @@
 import 'package:chathub/src/frontend/styles/baseStyle.dart';
-import 'package:chathub/src/frontend/styles/colorsStyle.dart';
 import 'package:chathub/src/frontend/styles/textfieldstyle.dart';
 import 'package:chathub/src/frontend/styles/textstyle.dart';
 import 'package:flutter/material.dart';
@@ -15,13 +14,14 @@ class AppTextField extends StatefulWidget {
   final String initialText;
   final Function() suffixPressed;
   final Function() prefixPressed;
+  final FocusNode focusNode;
   final TextEditingController controller;
 
   var suffixIcon;
 
   AppTextField({
     @required this.hintText,
-    @required this.prefixIcon,
+    this.prefixIcon,
     this.suffixIcon,
     this.textInputType = TextInputType.text,
     this.obsecureText = false,
@@ -30,7 +30,7 @@ class AppTextField extends StatefulWidget {
     this.initialText,
     this.suffixPressed,
     this.prefixPressed,
-    this.controller,
+    this.controller, this.focusNode,
   });
 
   @override
@@ -39,7 +39,7 @@ class AppTextField extends StatefulWidget {
 
 class _AppTextFieldState extends State<AppTextField> {
   String text;
-  // FocusNode _focusNode;
+  
   // bool displayCupertionErrorBorder;
   // @override
   // void initState() {
@@ -64,7 +64,7 @@ class _AppTextFieldState extends State<AppTextField> {
   void dispose() {
     widget.controller.dispose();
     // _focusNode.removeListener(_handleFocusChange);
-    // _focusNode.dispose();
+    widget.focusNode.dispose();
     super.dispose();
   }
 
@@ -73,6 +73,7 @@ class _AppTextFieldState extends State<AppTextField> {
     return Padding(
       padding: BaseStyle.textFieldPadding,
       child: TextField(
+        focusNode: widget.focusNode,
         controller: widget.controller,
         keyboardType: widget.textInputType,
         cursorColor: Colors.white,
@@ -91,26 +92,26 @@ class _AppTextFieldState extends State<AppTextField> {
             icon: BaseStyle.myIcon(widget.suffixIcon),
             onPressed: widget.suffixPressed,
           ),
-          focusedBorder: OutlineInputBorder(
-              borderSide: BorderSide(
-                  color: AppColor.iconColors.withOpacity(0.7), width: 1.5),
-              borderRadius: BorderRadius.circular(BaseStyle.borderRaduis)),
-          enabledBorder: OutlineInputBorder(
-              borderSide: BorderSide(
-                  color: AppColor.iconColors.withOpacity(0.7), width: 1.5),
-              borderRadius: BorderRadius.circular(BaseStyle.borderRaduis)),
-          disabledBorder: OutlineInputBorder(
-              borderSide: BorderSide(
-                  color: AppColor.iconColors.withOpacity(0.7), width: 1.5),
-              borderRadius: BorderRadius.circular(BaseStyle.borderRaduis)),
-          errorBorder: OutlineInputBorder(
-              borderSide: BorderSide(
-                  color: AppColor.iconColors.withOpacity(0.7), width: 1.5),
-              borderRadius: BorderRadius.circular(BaseStyle.borderRaduis)),
-          focusedErrorBorder: OutlineInputBorder(
-              borderSide: BorderSide(
-                  color: AppColor.iconColors.withOpacity(0.7), width: 1.5),
-              borderRadius: BorderRadius.circular(BaseStyle.borderRaduis)),
+          // focusedBorder: OutlineInputBorder(
+          //     borderSide: BorderSide(
+          //         color: AppColor.iconColors.withOpacity(0.7), width: 1.5),
+          //     borderRadius: BorderRadius.circular(BaseStyle.borderRaduisTextField)),
+          // enabledBorder: OutlineInputBorder(
+          //     borderSide: BorderSide(
+          //         color: AppColor.iconColors.withOpacity(0.7), width: 1.5),
+          //     borderRadius: BorderRadius.circular(BaseStyle.borderRaduisTextField)),
+          // disabledBorder: OutlineInputBorder(
+          //     borderSide: BorderSide(
+          //         color: AppColor.iconColors.withOpacity(0.7), width: 1.5),
+          //     borderRadius: BorderRadius.circular(BaseStyle.borderRaduisTextField)),
+          // errorBorder: OutlineInputBorder(
+          //     borderSide: BorderSide(
+          //         color: AppColor.iconColors.withOpacity(0.7), width: 1.5),
+          //     borderRadius: BorderRadius.circular(BaseStyle.borderRaduisTextField)),
+          // focusedErrorBorder: OutlineInputBorder(
+          //     borderSide: BorderSide(
+          //         color: AppColor.iconColors.withOpacity(0.7), width: 1.5),
+          //     borderRadius: BorderRadius.circular(BaseStyle.borderRaduisTextField)),
         ),
       ),
     );

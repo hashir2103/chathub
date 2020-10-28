@@ -62,7 +62,6 @@ class _MessageContianerState extends State<MessageContianer> {
               children: [
                 Text(
                   widget.message['message'],
-                  // overflow:TextOverflow.visible,
                   style: TextStyles.message,
                 ),
                 SizedBox(
@@ -104,7 +103,6 @@ class _MessageContianerState extends State<MessageContianer> {
               children: [
                 Text(
                   widget.message['message'],
-                  // overflow:TextOverflow.visible,
                   style: TextStyles.message,
                 ),
                 SizedBox(

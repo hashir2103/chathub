@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 abstract class BaseStyle {
   static double get borderRaduis => 25.0;
+  static double get borderRaduisTextField => 15.0;
   static double get iconSize => 28.0;
   static double get avatarRadius => 30.0;
   static double get buttonPadding => 35.0;
