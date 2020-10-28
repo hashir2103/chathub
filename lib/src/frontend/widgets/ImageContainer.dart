@@ -53,10 +53,7 @@ class _ImageContainerState extends State<ImageContainer> {
                       onTap: () => Navigator.pushNamed(context, '/showimage',
                           arguments: widget.message['photoUrl']),
                       child: Container(
-                        child: CachedImage(url: widget.message['photoUrl']) ??
-                            Center(
-                              child: CircularProgressIndicator(),
-                            ),
+                        child: CachedImage(widget.message['photoUrl'],height: 250 ,width: 250, radius: 10,)
                       )),
                   Positioned(
                     bottom: 3,
@@ -86,9 +83,7 @@ class _ImageContainerState extends State<ImageContainer> {
                 onTap: () => Navigator.pushNamed(context, '/showimage',
                     arguments: widget.message['photoUrl']),
                 child: Container(
-                    child: CachedImage(url: widget.message['photoUrl']) ??
-                        Center(child: CircularProgressIndicator())),
-              ),
+                    child: CachedImage(widget.message['photoUrl'],height: 250 ,width: 250, radius: 10,))),
               Positioned(
                 bottom: 3,
                 right: 3,
@@ -113,7 +108,7 @@ class ShowImage extends StatelessWidget {
       // appBar: MyAppBar(),
       body: Center(
         child:
-            (url.isEmpty) ? CircularProgressIndicator() : CachedImage(url: url),
+            (url.isEmpty) ? CircularProgressIndicator() : CachedImage(url,radius: 10,)
       ),
     );
   }

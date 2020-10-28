@@ -1,6 +1,7 @@
 import 'package:chathub/src/controller/bloc/callBloc.dart';
 import 'package:chathub/src/controller/models/call.dart';
 import 'package:chathub/src/frontend/views/CallFolder/CallScreen.dart';
+import 'package:chathub/src/frontend/widgets/cachedNetworkImage.dart';
 import 'package:flutter/material.dart';
 
 class PickupScreen extends StatelessWidget {
@@ -27,11 +28,11 @@ class PickupScreen extends StatelessWidget {
               ),
             ),
             SizedBox(height: 50),
-            // CachedImage(
-            //   call.callerPic,
-            //   isRound: true,
-            //   radius: 180,
-            // ),
+            CachedImage(
+              call.callerPic,
+              isRound: true,
+              radius: 180,
+            ),
             SizedBox(height: 15),
             Text(
               call.callerName,
