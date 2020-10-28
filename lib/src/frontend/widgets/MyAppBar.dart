@@ -1,5 +1,5 @@
-import 'package:chathub/src/frontend/styles/baseStyle.dart';
-import 'package:chathub/src/frontend/styles/colorsStyle.dart';
+import 'package:chathub/src/controller/styles/baseStyle.dart';
+import 'package:chathub/src/controller/styles/colorsStyle.dart';
 import 'package:flutter/material.dart';
 
 class MyAppBar extends StatefulWidget implements PreferredSizeWidget {
@@ -10,7 +10,10 @@ class MyAppBar extends StatefulWidget implements PreferredSizeWidget {
 
   const MyAppBar({
     Key key,
-    this.title,  this.leading, this.action, this.centerTitle,
+    this.title,
+    this.leading,
+    this.action,
+    this.centerTitle,
   }) : super(key: key);
 
   @override
@@ -25,10 +28,10 @@ class _MyAppBarState extends State<MyAppBar> {
     return Container(
         padding: EdgeInsets.only(top: BaseStyle.appBarPadding),
         decoration: BoxDecoration(
-          color: AppColor.blackColor,
+            color: AppColor.blackColor,
             border: Border(
-          bottom: BorderSide(width: 2, style: BorderStyle.solid),
-        )),
+              bottom: BorderSide(width: 2, style: BorderStyle.solid),
+            )),
         child: AppBar(
           backgroundColor: AppColor.blackColor,
           elevation: 0,

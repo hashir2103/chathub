@@ -1,8 +1,8 @@
-import 'package:chathub/src/frontend/styles/baseStyle.dart';
-import 'package:chathub/src/frontend/styles/colorsStyle.dart';
-import 'package:chathub/src/frontend/views/CallScreen.dart';
+import 'package:chathub/src/controller/styles/baseStyle.dart';
+import 'package:chathub/src/controller/styles/colorsStyle.dart';
+import 'package:chathub/src/frontend/views/CallFolder/CallScreen.dart';
 import 'package:chathub/src/frontend/views/Chatfolder/ChatScreen.dart';
-import 'package:chathub/src/frontend/views/ContactScreen.dart';
+import 'package:chathub/src/frontend/views/contactFolder/ContactScreen.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 
@@ -20,7 +20,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Widget build(BuildContext context) {
     return Scaffold(
-      body:currentWidget,
+      body: currentWidget,
       backgroundColor: AppColor.blackColor,
       bottomNavigationBar: CurvedNavigationBar(
         color: AppColor.blackColor,
@@ -30,15 +30,27 @@ class _HomeScreenState extends State<HomeScreen> {
         animationCurve: Curves.easeInOutQuad,
         index: 1,
         items: <Widget>[
-          Icon(Icons.call, size:BaseStyle.iconSize,color:AppColor.iconColors,),
-          Icon(Icons.chat, size: BaseStyle.iconSize,color:AppColor.iconColors,),
-          Icon(Icons.contacts, size: BaseStyle.iconSize,color:AppColor.iconColors,),
+          Icon(
+            Icons.call,
+            size: BaseStyle.iconSize,
+            color: AppColor.iconColors,
+          ),
+          Icon(
+            Icons.chat,
+            size: BaseStyle.iconSize,
+            color: AppColor.iconColors,
+          ),
+          Icon(
+            Icons.contacts,
+            size: BaseStyle.iconSize,
+            color: AppColor.iconColors,
+          ),
         ],
         onTap: (index) {
           switch (index) {
             case 0:
               setState(() {
-                currentWidget = CallScreen();
+                currentWidget = CallScreen(call: null,); //todo
               });
               break;
             case 1:

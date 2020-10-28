@@ -1,6 +1,6 @@
-import 'package:chathub/src/frontend/styles/baseStyle.dart';
-import 'package:chathub/src/frontend/styles/colorsStyle.dart';
-import 'package:chathub/src/frontend/styles/textstyle.dart';
+import 'package:chathub/src/controller/styles/baseStyle.dart';
+import 'package:chathub/src/controller/styles/colorsStyle.dart';
+import 'package:chathub/src/controller/styles/textstyle.dart';
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
 

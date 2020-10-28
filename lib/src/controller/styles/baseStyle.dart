@@ -1,4 +1,4 @@
-import 'package:chathub/src/frontend/styles/colorsStyle.dart';
+import 'package:chathub/src/controller/styles/colorsStyle.dart';
 import 'package:flutter/material.dart';
 
 abstract class BaseStyle {

@@ -1,6 +1,6 @@
 import 'package:chathub/src/controller/models/userModel.dart';
-import 'package:chathub/src/frontend/styles/colorsStyle.dart';
-import 'package:chathub/src/frontend/styles/textstyle.dart';
+import 'package:chathub/src/controller/styles/colorsStyle.dart';
+import 'package:chathub/src/controller/styles/textstyle.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
@@ -39,8 +39,8 @@ class _MessageContianerState extends State<MessageContianer> {
         sender = true;
       });
       return Align(
-        alignment: Alignment.centerRight,
-        child: Container(
+          alignment: Alignment.centerRight,
+          child: Container(
             constraints: BoxConstraints(
                 maxWidth: MediaQuery.of(context).size.width * 0.60),
             margin: EdgeInsets.only(bottom: 12, left: 7, right: 7),
@@ -56,26 +56,25 @@ class _MessageContianerState extends State<MessageContianer> {
                 ),
                 border: Border.all(width: 2.5, color: AppColor.separatorColor)),
             child: Container(
-              child: Container(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                Text(
-                  widget.message['message'],
-                  style: TextStyles.message,
-                ),
-                SizedBox(
-                  height: 5,
-                ),
-                Text(
-                  time ?? "",
-                  style: TextStyles.smallText,
-                ),
-              ],
-            ),
-          ) 
-            ),
-      ));
+                child: Container(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  Text(
+                    widget.message['message'],
+                    style: TextStyles.message,
+                  ),
+                  SizedBox(
+                    height: 5,
+                  ),
+                  Text(
+                    time ?? "",
+                    style: TextStyles.smallText,
+                  ),
+                ],
+              ),
+            )),
+          ));
     }
     setState(() {
       sender = false;

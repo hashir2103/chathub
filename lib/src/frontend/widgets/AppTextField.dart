@@ -1,6 +1,6 @@
-import 'package:chathub/src/frontend/styles/baseStyle.dart';
-import 'package:chathub/src/frontend/styles/textfieldstyle.dart';
-import 'package:chathub/src/frontend/styles/textstyle.dart';
+import 'package:chathub/src/controller/styles/baseStyle.dart';
+import 'package:chathub/src/controller/styles/textfieldstyle.dart';
+import 'package:chathub/src/controller/styles/textstyle.dart';
 import 'package:flutter/material.dart';
 
 // ignore: must_be_immutable
@@ -30,7 +30,8 @@ class AppTextField extends StatefulWidget {
     this.initialText,
     this.suffixPressed,
     this.prefixPressed,
-    this.controller, this.focusNode,
+    this.controller,
+    this.focusNode,
   });
 
   @override
@@ -39,7 +40,7 @@ class AppTextField extends StatefulWidget {
 
 class _AppTextFieldState extends State<AppTextField> {
   String text;
-  
+
   // bool displayCupertionErrorBorder;
   // @override
   // void initState() {

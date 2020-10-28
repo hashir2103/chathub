@@ -1,13 +1,14 @@
 import 'dart:math';
 
 import 'package:chathub/src/backend/firebase_services.dart';
+import 'package:chathub/src/controller/bloc/callBloc.dart';
 import 'package:chathub/src/controller/bloc/chatBloc.dart';
 import 'package:chathub/src/controller/bloc/searchbloc.dart';
 import 'package:chathub/src/controller/models/message.dart';
 import 'package:chathub/src/controller/models/userModel.dart';
-import 'package:chathub/src/frontend/styles/baseStyle.dart';
-import 'package:chathub/src/frontend/styles/colorsStyle.dart';
-import 'package:chathub/src/frontend/styles/textstyle.dart';
+import 'package:chathub/src/controller/styles/baseStyle.dart';
+import 'package:chathub/src/controller/styles/colorsStyle.dart';
+import 'package:chathub/src/controller/styles/textstyle.dart';
 import 'package:chathub/src/frontend/widgets/AppTextField.dart';
 import 'package:chathub/src/frontend/widgets/ImageContainer.dart';
 import 'package:chathub/src/frontend/widgets/MyAppBar.dart';
@@ -48,60 +49,15 @@ class _ChatMessageState extends State<ChatMessage> {
   @override
   Widget build(BuildContext context) {
     var searchBloc = Provider.of<SearchBloc>(context);
+    var callMethods = Provider.of<CallMethods>(context);
     sender = _db.currentUser;
     return Scaffold(
-      appBar: appBar(context, searchBloc),
+      appBar: appBar(context, searchBloc, callMethods),
       body: Column(
         children: [
-          SizedBox(
-            height: 10,
-          ),
+          SizedBox(height: 10,),
           Expanded(child: messageList()),
-          Container(
-            margin: EdgeInsets.all(7),
-            decoration: BoxDecoration(
-                // boxShadow: kElevationToShadow[2],
-                border: Border.all(color: AppColor.iconColors, width: 1),
-                borderRadius: BorderRadius.circular(20)),
-            height: 70,
-            child: Stack(
-              children: [
-                AppTextField(
-                  focusNode: focusNode,
-                  controller: _controller,
-                  textInputType: TextInputType.multiline,
-                  hintText: "Type Message..",
-                ),
-                Container(
-                  margin: EdgeInsets.only(left: 7),
-                  child: Align(
-                    alignment: Alignment.centerLeft,
-                    child: GestureDetector(
-                        onTap: showOptions,
-                        child: CircleAvatar(
-                            backgroundColor: AppColor.darkblue,
-                            child: Transform.rotate(
-                                angle: -pi / 4,
-                                child: BaseStyle.myIcon(Icons.attach_file)))),
-                    // )
-                  ),
-                ),
-                Container(
-                  margin: EdgeInsets.only(right: 7),
-                  child: Align(
-                      alignment: Alignment.centerRight,
-                      child: GestureDetector(
-                          onTap: sendMessage,
-                          child: CircleAvatar(
-                              backgroundColor:
-                                  AppColor.blueColor.withOpacity(0.5),
-                              child: Transform.rotate(
-                                  angle: 0,
-                                  child: BaseStyle.myIcon(Icons.send))))),
-                )
-              ],
-            ),
-          ),
+          textBoxAndIcon()
         ],
       ),
     );
@@ -146,7 +102,6 @@ class _ChatMessageState extends State<ChatMessage> {
                               );
                               FocusScope.of(context).unfocus();
                               Navigator.of(context).pop();
-                            
                             }),
                       ),
                     ),
@@ -220,7 +175,53 @@ class _ChatMessageState extends State<ChatMessage> {
         });
   }
 
-  MyAppBar appBar(context, SearchBloc searchBloc) {
+  Widget textBoxAndIcon() {
+    return Container(
+      margin: EdgeInsets.all(7),
+      decoration: BoxDecoration(
+          // boxShadow: kElevationToShadow[2],
+          border: Border.all(color: AppColor.iconColors, width: 1),
+          borderRadius: BorderRadius.circular(20)),
+      height: 70,
+      child: Stack(
+        children: [
+          AppTextField(
+            focusNode: focusNode,
+            controller: _controller,
+            textInputType: TextInputType.multiline,
+            hintText: "Type Message..",
+          ),
+          Container(
+            margin: EdgeInsets.only(left: 7),
+            child: Align(
+              alignment: Alignment.centerLeft,
+              child: GestureDetector(
+                  onTap: showOptions,
+                  child: CircleAvatar(
+                      backgroundColor: AppColor.darkblue,
+                      child: Transform.rotate(
+                          angle: -pi / 4,
+                          child: BaseStyle.myIcon(Icons.attach_file)))),
+              // )
+            ),
+          ),
+          Container(
+            margin: EdgeInsets.only(right: 7),
+            child: Align(
+                alignment: Alignment.centerRight,
+                child: GestureDetector(
+                    onTap: sendMessage,
+                    child: CircleAvatar(
+                        backgroundColor: AppColor.blueColor.withOpacity(0.5),
+                        child: Transform.rotate(
+                            angle: 0, child: BaseStyle.myIcon(Icons.send))))),
+          )
+        ],
+      ),
+    );
+  }
+
+  MyAppBar appBar(context, SearchBloc searchBloc, CallMethods callMethods) {
     return MyAppBar(
       title: Row(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -252,7 +253,10 @@ class _ChatMessageState extends State<ChatMessage> {
             color: AppColor.iconColors,
             iconSize: BaseStyle.iconSize,
             icon: Icon(Icons.video_call),
-            onPressed: () {}),
+            onPressed: () {
+              callMethods.dial(
+                  from: sender, to: widget.receiver, context: context);
+            }),
         IconButton(
             color: AppColor.iconColors,
             iconSize: BaseStyle.iconSize,

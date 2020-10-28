@@ -1,6 +1,6 @@
 import 'package:chathub/src/controller/bloc/searchbloc.dart';
-import 'package:chathub/src/frontend/styles/baseStyle.dart';
-import 'package:chathub/src/frontend/styles/colorsStyle.dart';
+import 'package:chathub/src/controller/styles/baseStyle.dart';
+import 'package:chathub/src/controller/styles/colorsStyle.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -53,9 +53,7 @@ class _AnimatedSearchBarState extends State<AnimatedSearchBar> {
                   child: Container(
                       padding: EdgeInsets.only(left: 16),
                       child: TextField(
-                        style: TextStyle(
-                          color: Colors.white
-                        ),
+                        style: TextStyle(color: Colors.white),
                         cursorColor: Colors.white,
                         focusNode: myFocusNode,
                         controller: query,

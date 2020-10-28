@@ -2,8 +2,8 @@ import 'package:chathub/src/backend/firebase_services.dart';
 import 'package:chathub/src/controller/bloc/searchbloc.dart';
 import 'package:chathub/src/controller/models/ChatModel.dart';
 import 'package:chathub/src/controller/models/userModel.dart';
-import 'package:chathub/src/frontend/styles/baseStyle.dart';
-import 'package:chathub/src/frontend/styles/colorsStyle.dart';
+import 'package:chathub/src/controller/styles/baseStyle.dart';
+import 'package:chathub/src/controller/styles/colorsStyle.dart';
 import 'package:chathub/src/frontend/views/searchScreen.dart';
 import 'package:chathub/src/frontend/widgets/MainAppBar.dart';
 import 'package:chathub/src/frontend/widgets/AppTile.dart';
@@ -19,7 +19,7 @@ class _ChatScreenState extends State<ChatScreen> {
   MyUser user;
   @override
   void initState() {
-    var _db = Provider.of<FirebaseServices>(context,listen: false);
+    var _db = Provider.of<FirebaseServices>(context, listen: false);
     setState(() {
       user = _db.currentUser;
     });

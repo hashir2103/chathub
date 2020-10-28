@@ -1,7 +1,7 @@
-import 'package:chathub/src/frontend/views/CallScreen.dart';
+import 'package:chathub/src/frontend/views/CallFolder/CallScreen.dart';
 import 'package:chathub/src/frontend/views/Chatfolder/ChatScreen.dart';
 import 'package:chathub/src/frontend/views/Chatfolder/chatmessage.dart';
-import 'package:chathub/src/frontend/views/ContactScreen.dart';
+import 'package:chathub/src/frontend/views/contactFolder/ContactScreen.dart';
 import 'package:chathub/src/frontend/views/HomeScreen.dart';
 import 'package:chathub/src/frontend/views/LoginScreen.dart';
 import 'package:chathub/src/frontend/views/searchScreen.dart';
@@ -20,7 +20,7 @@ abstract class Routes {
       case '/chatscreen':
         return MaterialPageRoute(builder: (context) => ChatScreen());
       case '/callscreen':
-        return MaterialPageRoute(builder: (context) => CallScreen());
+        return MaterialPageRoute(builder: (context) => CallScreen(call: settings.arguments));
       case '/contactscreen':
         return MaterialPageRoute(builder: (context) => ContactScreen());
       case '/searchscreen':

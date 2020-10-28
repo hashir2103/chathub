@@ -1,9 +1,9 @@
 import 'package:chathub/src/backend/firebase_services.dart';
 import 'package:chathub/src/controller/bloc/searchbloc.dart';
 import 'package:chathub/src/controller/models/userModel.dart';
-import 'package:chathub/src/frontend/styles/baseStyle.dart';
-import 'package:chathub/src/frontend/styles/colorsStyle.dart';
-import 'package:chathub/src/frontend/styles/textstyle.dart';
+import 'package:chathub/src/controller/styles/baseStyle.dart';
+import 'package:chathub/src/controller/styles/colorsStyle.dart';
+import 'package:chathub/src/controller/styles/textstyle.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

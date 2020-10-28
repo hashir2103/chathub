@@ -1,8 +1,9 @@
 import 'package:chathub/src/backend/firebase_services.dart';
 import 'package:chathub/src/backend/routes.dart';
+import 'package:chathub/src/controller/bloc/callBloc.dart';
 import 'package:chathub/src/controller/bloc/chatBloc.dart';
 import 'package:chathub/src/controller/bloc/searchbloc.dart';
-import 'package:chathub/src/frontend/styles/colorsStyle.dart';
+import 'package:chathub/src/controller/styles/colorsStyle.dart';
 import 'package:chathub/src/frontend/views/HomeScreen.dart';
 import 'package:chathub/src/frontend/views/LoginScreen.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -24,25 +25,24 @@ class _MyAppState extends State<MyApp> {
   FirebaseServices _auth = FirebaseServices();
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(providers: [
-      Provider(create: (context) => FirebaseServices()),
-      Provider(create: (context)=>SearchBloc()),
-      Provider(create: (context)=>ChatBloc()),
-    ],
-    child: MaterialApp(
-      theme: ThemeData(
-        appBarTheme: AppBarTheme(
-          color: AppColor.blackColor
-        ),
-        scaffoldBackgroundColor: AppColor.blackColor
-      ),
-      onGenerateRoute: Routes.materialPageRoute,
-      debugShowCheckedModeBanner: false,
-      home: Scaffold(
-        body:(_auth.currentUser.email.isEmpty)
-        ? LoginScreen()
-        : HomeScreen(),
-      ),
-    ));
+    return MultiProvider(
+        providers: [
+          Provider(create: (context) => FirebaseServices()),
+          Provider(create: (context) => SearchBloc()),
+          Provider(create: (context) => ChatBloc()),
+          Provider(create: (context) => CallMethods()),
+        ],
+        child: MaterialApp(
+          theme: ThemeData(
+              appBarTheme: AppBarTheme(color: AppColor.blackColor),
+              scaffoldBackgroundColor: AppColor.blackColor),
+          onGenerateRoute: Routes.materialPageRoute,
+          debugShowCheckedModeBanner: false,
+          home: Scaffold(
+            body: (_auth.currentUser.email.isEmpty)
+                ? LoginScreen()
+                : HomeScreen(),
+          ),
+        ));
   }
 }

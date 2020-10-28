@@ -1,7 +1,6 @@
-
-import 'package:chathub/src/frontend/styles/baseStyle.dart';
-import 'package:chathub/src/frontend/styles/colorsStyle.dart';
-import 'package:chathub/src/frontend/styles/textstyle.dart';
+import 'package:chathub/src/controller/styles/baseStyle.dart';
+import 'package:chathub/src/controller/styles/colorsStyle.dart';
+import 'package:chathub/src/controller/styles/textstyle.dart';
 import 'package:flutter/material.dart';
 
 abstract class TextFieldStyle {
@@ -10,14 +9,14 @@ abstract class TextFieldStyle {
 
   static TextStyle get placeHolder => TextStyles.suggestion;
 
-
   static TextAlign get textAlign => TextAlign.center;
 
   static Widget iconPrefix(IconData icon) => BaseStyle.iconPrefix(icon);
 
   static BoxDecoration get cupertinoDecoration {
     return BoxDecoration(
-      border: Border.all(color: AppColor.separatorColor, width: BaseStyle.borderRaduis),
+      border: Border.all(
+          color: AppColor.separatorColor, width: BaseStyle.borderRaduis),
       borderRadius: BorderRadius.circular(BaseStyle.borderwidth),
     );
   }
@@ -37,21 +36,20 @@ abstract class TextFieldStyle {
       errorText: errorText,
       errorStyle: TextStyles.errorText,
       hintStyle: TextFieldStyle.placeHolder,
-      
       border: InputBorder.none,
       focusedBorder: OutlineInputBorder(
-        borderSide:
-            BorderSide(color: AppColor.senderColor, width: BaseStyle.borderwidth),
+        borderSide: BorderSide(
+            color: AppColor.senderColor, width: BaseStyle.borderwidth),
         borderRadius: BorderRadius.circular(BaseStyle.borderRaduis),
       ),
       enabledBorder: OutlineInputBorder(
-        borderSide:
-            BorderSide(color: AppColor.separatorColor, width: BaseStyle.borderwidth),
+        borderSide: BorderSide(
+            color: AppColor.separatorColor, width: BaseStyle.borderwidth),
         borderRadius: BorderRadius.circular(BaseStyle.borderRaduis),
       ),
       focusedErrorBorder: OutlineInputBorder(
-        borderSide:
-            BorderSide(color: AppColor.separatorColor, width: BaseStyle.borderwidth),
+        borderSide: BorderSide(
+            color: AppColor.separatorColor, width: BaseStyle.borderwidth),
         borderRadius: BorderRadius.circular(BaseStyle.borderRaduis),
       ),
       errorBorder: OutlineInputBorder(

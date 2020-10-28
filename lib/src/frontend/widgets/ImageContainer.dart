@@ -1,7 +1,7 @@
 import 'package:chathub/src/controller/models/userModel.dart';
 // ignore: unused_import
-import 'package:chathub/src/frontend/styles/colorsStyle.dart';
-import 'package:chathub/src/frontend/styles/textstyle.dart';
+import 'package:chathub/src/controller/styles/colorsStyle.dart';
+import 'package:chathub/src/controller/styles/textstyle.dart';
 import 'package:chathub/src/frontend/widgets/cachedNetworkImage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -43,7 +43,7 @@ class _ImageContainerState extends State<ImageContainer> {
           alignment: Alignment.centerRight,
           child: Container(
               constraints: BoxConstraints(
-                maxHeight: MediaQuery.of(context).size.height*0.3,
+                  maxHeight: MediaQuery.of(context).size.height * 0.3,
                   maxWidth: MediaQuery.of(context).size.width * 0.60),
               margin: EdgeInsets.only(bottom: 12, left: 7, right: 7),
               // padding: EdgeInsets.all(8),
@@ -53,7 +53,7 @@ class _ImageContainerState extends State<ImageContainer> {
                       onTap: () => Navigator.pushNamed(context, '/showimage',
                           arguments: widget.message['photoUrl']),
                       child: Container(
-                        child: CachedImage(url:widget.message['photoUrl']) ??
+                        child: CachedImage(url: widget.message['photoUrl']) ??
                             Center(
                               child: CircularProgressIndicator(),
                             ),
@@ -76,7 +76,7 @@ class _ImageContainerState extends State<ImageContainer> {
       alignment: Alignment.centerLeft,
       child: Container(
           constraints: BoxConstraints(
-            maxHeight: MediaQuery.of(context).size.height*0.3,
+              maxHeight: MediaQuery.of(context).size.height * 0.3,
               maxWidth: MediaQuery.of(context).size.width * 0.60),
           margin: EdgeInsets.only(bottom: 12, left: 7, right: 7),
           // padding: EdgeInsets.all(8),
@@ -112,7 +112,8 @@ class ShowImage extends StatelessWidget {
     return Scaffold(
       // appBar: MyAppBar(),
       body: Center(
-        child: (url.isEmpty) ? CircularProgressIndicator() : CachedImage(url:url),
+        child:
+            (url.isEmpty) ? CircularProgressIndicator() : CachedImage(url: url),
       ),
     );
   }

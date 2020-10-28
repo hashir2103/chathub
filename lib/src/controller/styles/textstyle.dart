@@ -1,4 +1,4 @@
-import 'package:chathub/src/frontend/styles/colorsStyle.dart';
+import 'package:chathub/src/controller/styles/colorsStyle.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -20,19 +20,20 @@ abstract class TextStyles {
 
   static TextStyle get appTileSubtilte {
     return TextStyle(
-            color: Colors.grey,
-            fontSize: 16.0,
-        );
+      color: Colors.grey,
+      fontSize: 16.0,
+    );
   }
 
   static TextStyle get chatAppBarTitle {
     return GoogleFonts.roboto(
         textStyle: TextStyle(color: Colors.white, fontSize: 18.0));
   }
-  
+
   static TextStyle get message {
     return GoogleFonts.roboto(
-        textStyle: TextStyle(color: Colors.white.withOpacity(0.6), fontSize: 20.0));
+        textStyle:
+            TextStyle(color: Colors.white.withOpacity(0.6), fontSize: 20.0));
   }
 
   static TextStyle get picker {
@@ -54,5 +55,4 @@ abstract class TextStyles {
     return GoogleFonts.roboto(
         textStyle: TextStyle(color: AppColor.iconColors, fontSize: 12.0));
   }
-  
 }

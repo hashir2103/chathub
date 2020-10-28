@@ -1,8 +1,8 @@
 import 'package:chathub/src/backend/firebase_services.dart';
 import 'package:chathub/src/controller/bloc/searchbloc.dart';
-import 'package:chathub/src/frontend/styles/baseStyle.dart';
-import 'package:chathub/src/frontend/styles/colorsStyle.dart';
-import 'package:chathub/src/frontend/styles/textstyle.dart';
+import 'package:chathub/src/controller/styles/baseStyle.dart';
+import 'package:chathub/src/controller/styles/colorsStyle.dart';
+import 'package:chathub/src/controller/styles/textstyle.dart';
 import 'package:chathub/src/frontend/widgets/AnimatedSearchBar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -57,7 +57,7 @@ class _AppAppBarState extends State<AppAppBar> {
                           child: CircleAvatar(
                               radius: 25,
                               backgroundColor: AppColor.separatorColor,
-                              child: Text(widget.displayName[0]?? " ",
+                              child: Text(widget.displayName[0] ?? " ",
                                   style: TextStyles.chatAppBarTitle)),
                         ),
                       ]),
