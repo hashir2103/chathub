@@ -4,8 +4,10 @@ import 'package:chathub/src/controller/bloc/callBloc.dart';
 import 'package:chathub/src/controller/bloc/chatBloc.dart';
 import 'package:chathub/src/controller/bloc/searchbloc.dart';
 import 'package:chathub/src/controller/styles/colorsStyle.dart';
+import 'package:chathub/src/frontend/views/CallFolder/pickup_layout.dart';
 import 'package:chathub/src/frontend/views/HomeScreen.dart';
 import 'package:chathub/src/frontend/views/LoginScreen.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -22,7 +24,14 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  FirebaseServices _auth = FirebaseServices();
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  User user;
+  @override
+  void initState() {
+    user = _auth.currentUser;
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
@@ -38,10 +47,10 @@ class _MyAppState extends State<MyApp> {
               scaffoldBackgroundColor: AppColor.blackColor),
           onGenerateRoute: Routes.materialPageRoute,
           debugShowCheckedModeBanner: false,
-          home: Scaffold(
-            body: (_auth.currentUser.email.isEmpty)
-                ? LoginScreen()
-                : HomeScreen(),
+          home: PickupLayout(
+            scaffold: Scaffold(
+              body: (user == null) ? LoginScreen() : HomeScreen(),
+            ),
           ),
         ));
   }

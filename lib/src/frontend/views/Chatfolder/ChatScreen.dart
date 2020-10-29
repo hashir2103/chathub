@@ -4,6 +4,7 @@ import 'package:chathub/src/controller/models/ChatModel.dart';
 import 'package:chathub/src/controller/models/userModel.dart';
 import 'package:chathub/src/controller/styles/baseStyle.dart';
 import 'package:chathub/src/controller/styles/colorsStyle.dart';
+import 'package:chathub/src/frontend/views/CallFolder/pickup_layout.dart';
 import 'package:chathub/src/frontend/views/searchScreen.dart';
 import 'package:chathub/src/frontend/widgets/MainAppBar.dart';
 import 'package:chathub/src/frontend/widgets/AppTile.dart';
@@ -33,33 +34,35 @@ class _ChatScreenState extends State<ChatScreen> {
         initialData: false,
         stream: searchBloc.showSearchResult,
         builder: (context, snapshot) {
-          return Scaffold(
-            backgroundColor: AppColor.blackColor,
-            appBar: AppAppBar(displayName: user.displayName ?? ' '),
-            body: (!snapshot.hasData)
-                ? chatContainer(user)
-                : Stack(
-                    children: [
-                      chatContainer(user),
-                      (snapshot.data) ? SearchScreen() : Container()
-                    ],
-                  ),
-            floatingActionButton: (snapshot.data)
-                ? Container()
-                : FloatingActionButton(
-                    elevation: 1,
-                    backgroundColor: AppColor.separatorColor,
-                    foregroundColor: AppColor.iconColors,
-                    child: Icon(
-                      Icons.edit,
-                      size: BaseStyle.iconSize,
+          return PickupLayout(
+            scaffold: Scaffold(
+              backgroundColor: AppColor.blackColor,
+              appBar: AppAppBar(displayName: user.displayName ?? ' '),
+              body: (!snapshot.hasData)
+                  ? chatContainer(user)
+                  : Stack(
+                      children: [
+                        chatContainer(user),
+                        (snapshot.data) ? SearchScreen() : Container()
+                      ],
                     ),
-                    // mini: true,
-                    tooltip: "Start New Chat",
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.all(
-                            Radius.circular(BaseStyle.borderRaduis))),
-                    onPressed: () {}),
+              floatingActionButton: (snapshot.data)
+                  ? Container()
+                  : FloatingActionButton(
+                      elevation: 1,
+                      backgroundColor: AppColor.separatorColor,
+                      foregroundColor: AppColor.iconColors,
+                      child: Icon(
+                        Icons.edit,
+                        size: BaseStyle.iconSize,
+                      ),
+                      // mini: true,
+                      tooltip: "Start New Chat",
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.all(
+                              Radius.circular(BaseStyle.borderRaduis))),
+                      onPressed: () {}),
+            ),
           );
         });
   }

@@ -1,6 +1,6 @@
 import 'package:chathub/src/controller/styles/baseStyle.dart';
 import 'package:chathub/src/controller/styles/colorsStyle.dart';
-import 'package:chathub/src/frontend/views/CallFolder/CallScreen.dart';
+import 'package:chathub/src/frontend/views/CallFolder/callLogs.dart';
 import 'package:chathub/src/frontend/views/CallFolder/pickup_layout.dart';
 import 'package:chathub/src/frontend/views/Chatfolder/ChatScreen.dart';
 import 'package:chathub/src/frontend/views/contactFolder/ContactScreen.dart';
@@ -52,9 +52,7 @@ class _HomeScreenState extends State<HomeScreen> {
             switch (index) {
               case 0:
                 setState(() {
-                  currentWidget = CallScreen(
-                    call: null,
-                  ); //todo
+                  currentWidget = CallLogs(); 
                 });
                 break;
               case 1:

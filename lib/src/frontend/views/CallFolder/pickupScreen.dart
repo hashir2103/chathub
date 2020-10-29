@@ -1,5 +1,6 @@
 import 'package:chathub/src/controller/bloc/callBloc.dart';
 import 'package:chathub/src/controller/models/call.dart';
+import 'package:chathub/src/controller/utils/premissions.dart';
 import 'package:chathub/src/frontend/views/CallFolder/CallScreen.dart';
 import 'package:chathub/src/frontend/widgets/cachedNetworkImage.dart';
 import 'package:flutter/material.dart';
@@ -56,12 +57,14 @@ class PickupScreen extends StatelessWidget {
                 IconButton(
                     icon: Icon(Icons.call),
                     color: Colors.green,
-                    onPressed: () => Navigator.push(
+                    onPressed: () async => await Permissions.cameraAndMicrophonePermissionsGranted()
+                    ? Navigator.push(
                           context,
                           MaterialPageRoute(
                             builder: (context) => CallScreen(call: call),
                           ),
-                        )),
+                        )
+                    :{}),
               ],
             ),
           ],

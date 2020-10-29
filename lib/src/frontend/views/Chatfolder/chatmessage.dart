@@ -9,6 +9,8 @@ import 'package:chathub/src/controller/models/userModel.dart';
 import 'package:chathub/src/controller/styles/baseStyle.dart';
 import 'package:chathub/src/controller/styles/colorsStyle.dart';
 import 'package:chathub/src/controller/styles/textstyle.dart';
+import 'package:chathub/src/controller/utils/premissions.dart';
+import 'package:chathub/src/frontend/views/CallFolder/pickup_layout.dart';
 import 'package:chathub/src/frontend/widgets/AppTextField.dart';
 import 'package:chathub/src/frontend/widgets/ImageContainer.dart';
 import 'package:chathub/src/frontend/widgets/MyAppBar.dart';
@@ -42,7 +44,7 @@ class _ChatMessageState extends State<ChatMessage> {
 
   @override
   void dispose() {
-    focusNode.dispose();
+    // focusNode.dispose();
     super.dispose();
   }
 
@@ -51,14 +53,18 @@ class _ChatMessageState extends State<ChatMessage> {
     var searchBloc = Provider.of<SearchBloc>(context);
     var callMethods = Provider.of<CallMethods>(context);
     sender = _db.currentUser;
-    return Scaffold(
-      appBar: appBar(context, searchBloc, callMethods),
-      body: Column(
-        children: [
-          SizedBox(height: 10,),
-          Expanded(child: messageList()),
-          textBoxAndIcon()
-        ],
+    return PickupLayout(
+      scaffold: Scaffold(
+        appBar: appBar(context, searchBloc, callMethods),
+        body: Column(
+          children: [
+            SizedBox(
+              height: 10,
+            ),
+            Expanded(child: messageList()),
+            textBoxAndIcon()
+          ],
+        ),
       ),
     );
   }
@@ -253,10 +259,11 @@ class _ChatMessageState extends State<ChatMessage> {
             color: AppColor.iconColors,
             iconSize: BaseStyle.iconSize,
             icon: Icon(Icons.video_call),
-            onPressed: () {
-              callMethods.dial(
-                  from: sender, to: widget.receiver, context: context);
-            }),
+            onPressed: () async =>
+                await Permissions.cameraAndMicrophonePermissionsGranted()
+                    ? callMethods.dial(
+                        from: sender, to: widget.receiver, context: context)
+                    : {}),
         IconButton(
             color: AppColor.iconColors,
             iconSize: BaseStyle.iconSize,
