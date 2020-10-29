@@ -1,13 +1,13 @@
 import 'package:chathub/src/controller/models/userModel.dart';
 import 'package:chathub/src/controller/styles/colorsStyle.dart';
 import 'package:chathub/src/controller/styles/textstyle.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class MessageContianer extends StatefulWidget {
   final MyUser currentUser;
   final MyUser receiver;
   final Map message;
+
 
   const MessageContianer(
       {Key key, this.message, this.currentUser, this.receiver})
@@ -19,21 +19,10 @@ class MessageContianer extends StatefulWidget {
 
 class _MessageContianerState extends State<MessageContianer> {
   bool sender;
-  String time;
-  @override
-  void initState() {
-    super.initState();
-    time = (widget.message['timestamp'] as Timestamp)
-            .toDate()
-            .toString()
-            .split(' ')[1]
-            .split('.')[0]
-            .substring(0, 5) ??
-        " ";
-  }
 
   @override
   Widget build(BuildContext context) {
+    
     if (widget.currentUser.uid.trim() == widget.message['senderId'].trim()) {
       setState(() {
         sender = true;
@@ -68,7 +57,7 @@ class _MessageContianerState extends State<MessageContianer> {
                     height: 5,
                   ),
                   Text(
-                    time ?? "",
+                    widget.message['time'] ?? "",
                     style: TextStyles.smallText,
                   ),
                 ],
@@ -108,7 +97,7 @@ class _MessageContianerState extends State<MessageContianer> {
                   height: 5,
                 ),
                 Text(
-                  time ?? "",
+                  widget.message['time'] ?? "",
                   style: TextStyles.smallText,
                 ),
               ],

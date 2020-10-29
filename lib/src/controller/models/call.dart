@@ -1,4 +1,3 @@
-
 class Call {
   String callerId;
   String callerName;
@@ -6,7 +5,9 @@ class Call {
   String receiverId;
   String receiverName;
   String receiverPic;
-  String channelId;
+  // ignore: non_constant_identifier_names
+  String channel_name;
+  String token;
   bool hasDialled;
 
   Call({
@@ -16,8 +17,10 @@ class Call {
     this.receiverId,
     this.receiverName,
     this.receiverPic,
-    this.channelId,
     this.hasDialled,
+    // ignore: non_constant_identifier_names
+    this.channel_name,
+    this.token,
   });
 
   // to map
@@ -29,8 +32,9 @@ class Call {
     callMap["receiver_id"] = call.receiverId;
     callMap["receiver_name"] = call.receiverName;
     callMap["receiver_pic"] = call.receiverPic;
-    callMap["channel_id"] = call.channelId;
     callMap["has_dialled"] = call.hasDialled;
+    callMap['channel_name'] = call.channel_name;
+    callMap['token'] = call.token;
     return callMap;
   }
 
@@ -41,7 +45,8 @@ class Call {
     this.receiverId = callMap["receiver_id"];
     this.receiverName = callMap["receiver_name"];
     this.receiverPic = callMap["receiver_pic"];
-    this.channelId = callMap["channel_id"];
     this.hasDialled = callMap["has_dialled"];
+    this.channel_name = callMap["channel_name"];
+    this.token = callMap["token"];
   }
 }

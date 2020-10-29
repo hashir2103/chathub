@@ -1,15 +1,15 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-
 class Message {
   String senderId;
   String receiverId;
   String type;
   String message;
-  FieldValue timestamp;
+  String timestamp;
   String photoUrl;
+  String time;
 
   Message(
       {this.senderId,
+      this.time,
       this.receiverId,
       this.type,
       this.message,
@@ -22,6 +22,7 @@ class Message {
       this.message,
       this.type,
       this.timestamp,
+      this.time,
       this.photoUrl});
 
   Map toMap() {
@@ -31,6 +32,7 @@ class Message {
     map['type'] = this.type;
     map['message'] = this.message;
     map['timestamp'] = this.timestamp;
+    map['time'] = this.time;
     return map;
   }
 
@@ -42,14 +44,16 @@ class Message {
     map['type'] = this.type;
     map['timestamp'] = this.timestamp;
     map['photoUrl'] = this.photoUrl;
+    map['time'] = this.time;
     return map;
   }
 
-   factory Message.fromFirebase(Map<String, dynamic> map) {
+  factory Message.fromFirebase(Map<String, dynamic> map) {
     return Message(
         senderId: map['senderId'],
         receiverId: map['receiverId'],
         type: map['type'],
+        time: map['time'],
         message: map['message'],
         timestamp: map['timestamp']);
   }

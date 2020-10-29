@@ -3,7 +3,6 @@ import 'package:chathub/src/controller/models/userModel.dart';
 import 'package:chathub/src/controller/styles/colorsStyle.dart';
 import 'package:chathub/src/controller/styles/textstyle.dart';
 import 'package:chathub/src/frontend/widgets/cachedNetworkImage.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class ImageContainer extends StatefulWidget {
@@ -20,19 +19,6 @@ class ImageContainer extends StatefulWidget {
 
 class _ImageContainerState extends State<ImageContainer> {
   bool sender;
-  String time;
-  @override
-  void initState() {
-    super.initState();
-    time = (widget.message['timestamp'] as Timestamp)
-            .toDate()
-            .toString()
-            .split(' ')[1]
-            .split('.')[0]
-            .substring(0, 5) ??
-        " ";
-  }
-
   @override
   Widget build(BuildContext context) {
     if (widget.currentUser.uid.trim() == widget.message['senderId'].trim()) {
@@ -53,13 +39,17 @@ class _ImageContainerState extends State<ImageContainer> {
                       onTap: () => Navigator.pushNamed(context, '/showimage',
                           arguments: widget.message['photoUrl']),
                       child: Container(
-                        child: CachedImage(widget.message['photoUrl'],height: 250 ,width: 250, radius: 10,)
-                      )),
+                          child: CachedImage(
+                        widget.message['photoUrl'],
+                        height: 250,
+                        width: 250,
+                        radius: 10,
+                      ))),
                   Positioned(
                     bottom: 3,
                     right: 3,
                     child: Text(
-                      time ?? '',
+                      widget.message['time'] ?? '',
                       style: TextStyles.smallText,
                     ),
                   )
@@ -80,15 +70,20 @@ class _ImageContainerState extends State<ImageContainer> {
           child: Stack(
             children: [
               GestureDetector(
-                onTap: () => Navigator.pushNamed(context, '/showimage',
-                    arguments: widget.message['photoUrl']),
-                child: Container(
-                    child: CachedImage(widget.message['photoUrl'],height: 250 ,width: 250, radius: 10,))),
+                  onTap: () => Navigator.pushNamed(context, '/showimage',
+                      arguments: widget.message['photoUrl']),
+                  child: Container(
+                      child: CachedImage(
+                    widget.message['photoUrl'],
+                    height: 250,
+                    width: 250,
+                    radius: 10,
+                  ))),
               Positioned(
                 bottom: 3,
                 right: 3,
                 child: Text(
-                  time ?? '',
+                  widget.message['time'] ?? '',
                   style: TextStyles.smallText,
                 ),
               )
@@ -107,9 +102,12 @@ class ShowImage extends StatelessWidget {
     return Scaffold(
       // appBar: MyAppBar(),
       body: Center(
-        child:
-            (url.isEmpty) ? CircularProgressIndicator() : CachedImage(url,radius: 10,)
-      ),
+          child: (url.isEmpty)
+              ? CircularProgressIndicator()
+              : CachedImage(
+                  url,
+                  radius: 10,
+                )),
     );
   }
 }

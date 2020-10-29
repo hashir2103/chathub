@@ -15,7 +15,9 @@ class CallScreen extends StatefulWidget {
   final Call call;
   final ClientRole role;
 
-  const CallScreen({Key key, @required this.call, this.role = ClientRole.Broadcaster}) : super(key: key);
+  const CallScreen(
+      {Key key, @required this.call, this.role = ClientRole.Broadcaster})
+      : super(key: key);
 
   @override
   _CallScreenState createState() => _CallScreenState();
@@ -31,7 +33,7 @@ class _CallScreenState extends State<CallScreen> {
   RtcEngine _engine;
 
   @override
-  void initState() {
+  void initState(){
     var _db = Provider.of<FirebaseServices>(context, listen: false);
     currentUser = _db.currentUser;
     callMethods = Provider.of<CallMethods>(context, listen: false);
@@ -64,7 +66,7 @@ class _CallScreenState extends State<CallScreen> {
     VideoEncoderConfiguration configuration = VideoEncoderConfiguration();
     configuration.dimensions = VideoDimensions(1920, 1080);
     await _engine.setVideoEncoderConfiguration(configuration);
-    await _engine.joinChannel(Token, CHANNEL_NAME, null, 0);
+    await _engine.joinChannel(widget.call.token,widget.call.channel_name, null, 0);
   }
 
   /// Create agora sdk instance and initialize
@@ -114,11 +116,10 @@ class _CallScreenState extends State<CallScreen> {
     }));
   }
 
-  void _onCallEnd(BuildContext context) async{
+  void _onCallEnd(BuildContext context) async {
     await callMethods.endCall(call: widget.call);
     // Navigator.pop(context);
   }
-
 
   @override
   void dispose() {

@@ -10,6 +10,7 @@ class FirebaseServices {
   static final FirebaseFirestore _db = FirebaseFirestore.instance;
   MyUser myuser;
 
+
   MyUser get currentUser => MyUser(
       displayName: _auth.currentUser.displayName ?? " ",
       email: _auth.currentUser.email,
@@ -102,17 +103,20 @@ class FirebaseServices {
         .snapshots()
         .map((event) => event.docs)
         .map((snapdoc) => snapdoc.map((e) => e.data()).toList());
-        // print("Data from firebase : ${e.data()}");
+    // print("Data from firebase : ${e.data()}");
   }
 
   setImageMsg({String url, String senderId, String recieverId}) async {
+    var timestamp = DateTime.now().toIso8601String();
+    var time = timestamp.split('T')[1].substring(0,5);
     Message _message;
     _message = Message.imageMessage(
         message: "IMAGE",
         senderId: senderId,
         receiverId: recieverId,
         photoUrl: url,
-        timestamp: FieldValue.serverTimestamp(),
+        time: time,
+        timestamp: timestamp,
         type: 'image');
     var map = _message.toImageMap();
     await _db
@@ -126,6 +130,5 @@ class FirebaseServices {
         .doc(_message.receiverId)
         .collection(_message.senderId)
         .add(map);
-
   }
 }

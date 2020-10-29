@@ -7,7 +7,7 @@ class CallLogs extends StatelessWidget {
     return Scaffold(
       body: Center(
         child: Text(
-          "Call Logs Will Come here On this Screen",
+          "Call Logs",
           style: TextStyles.loginButton,
         ),
       ),

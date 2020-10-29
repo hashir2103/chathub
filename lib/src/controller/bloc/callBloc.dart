@@ -1,13 +1,12 @@
-
 import 'package:chathub/src/controller/models/call.dart';
 import 'package:chathub/src/controller/models/userModel.dart';
 import 'package:chathub/src/frontend/views/CallFolder/CallScreen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:uuid/uuid.dart';
 
 class CallMethods {
-  var uuid = Uuid();
+  Future<DocumentSnapshot> doc() =>
+      FirebaseFirestore.instance.collection('channel').doc('channel1').get();
 
   final CollectionReference callCollection =
       FirebaseFirestore.instance.collection('calls');
@@ -44,6 +43,7 @@ class CallMethods {
   }
 
   dial({MyUser from, MyUser to, context}) async {
+    var channeldata = await doc();
     Call call = Call(
       callerId: from.uid,
       callerName: from.displayName,
@@ -51,7 +51,8 @@ class CallMethods {
       receiverId: to.uid,
       receiverName: to.displayName,
       receiverPic: to.photoUrl,
-      channelId: uuid.v4()
+      channel_name: channeldata.data()['channel_name'],
+      token:channeldata.data()['token']
     );
 
     bool callMade = await makeCall(call: call);

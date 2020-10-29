@@ -15,7 +15,6 @@ import 'package:chathub/src/frontend/widgets/AppTextField.dart';
 import 'package:chathub/src/frontend/widgets/ImageContainer.dart';
 import 'package:chathub/src/frontend/widgets/MyAppBar.dart';
 import 'package:chathub/src/frontend/widgets/messagecontainer.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
@@ -148,11 +147,14 @@ class _ChatMessageState extends State<ChatMessage> {
 
   sendMessage() {
     if (_controller.text.trim().isNotEmpty) {
+      var timestamp = DateTime.now().toIso8601String();
+      var time = timestamp.split('T')[1].substring(0,5);
       Message message = Message(
           receiverId: widget.receiver.uid,
           senderId: sender.uid,
           message: _controller.text.trim(),
-          timestamp: FieldValue.serverTimestamp());
+          time: time,
+          timestamp:timestamp );
 
       _db.addMessageToDb(message, sender, widget.receiver);
       _controller.clear();
@@ -160,25 +162,27 @@ class _ChatMessageState extends State<ChatMessage> {
   }
 
   Widget messageList() {
-    return StreamBuilder<List<Map>>(
-        stream: _db.messageList(sender, widget.receiver),
-        builder: (context, snapshot) {
-          if (!snapshot.hasData) return Container();
-          return ListView.builder(
-              reverse: true,
-              itemCount: snapshot.data.length,
-              itemBuilder: (context, index) {
-                return (snapshot.data[index]['type'] == 'image')
-                    ? ImageContainer(
-                        receiver: widget.receiver,
-                        currentUser: sender,
-                        message: snapshot.data[index])
-                    : MessageContianer(
-                        receiver: widget.receiver,
-                        currentUser: sender,
-                        message: snapshot.data[index]);
-              });
-        });
+    return Container(
+      child: StreamBuilder<List<Map>>(
+          stream: _db.messageList(sender, widget.receiver),
+          builder: (context, snapshot) {
+            if (!snapshot.hasData) return Container();
+            return ListView.builder(
+                reverse: true,
+                itemCount: snapshot.data.length,
+                itemBuilder: (context, index) {
+                  return (snapshot.data[index]['type'] == 'image')
+                      ? ImageContainer(
+                          receiver: widget.receiver,
+                          currentUser: sender,
+                          message: snapshot.data[index])
+                      : MessageContianer(
+                          receiver: widget.receiver,
+                          currentUser: sender,
+                          message: snapshot.data[index]);
+                });
+          }),
+    );
   }
 
   Widget textBoxAndIcon() {

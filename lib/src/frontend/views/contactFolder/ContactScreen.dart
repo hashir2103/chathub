@@ -9,7 +9,7 @@ class ContactScreen extends StatelessWidget {
       scaffold: Scaffold(
         body: Center(
           child: Text(
-            "Contacts List on this Screen!",
+            "Contact List!",
             style: TextStyles.loginButton,
           ),
         ),
