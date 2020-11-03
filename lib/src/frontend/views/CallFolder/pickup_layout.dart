@@ -1,6 +1,6 @@
 import 'package:chathub/src/backend/firebase_services.dart';
 import 'package:chathub/src/controller/bloc/callBloc.dart';
-import 'package:chathub/src/controller/models/call.dart';
+import 'package:chathub/src/controller/models/callModel.dart';
 import 'package:chathub/src/controller/models/userModel.dart';
 import 'package:chathub/src/frontend/views/CallFolder/pickupScreen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';

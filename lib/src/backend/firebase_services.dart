@@ -1,4 +1,4 @@
-import 'package:chathub/src/controller/models/message.dart';
+import 'package:chathub/src/controller/models/messageModel.dart';
 import 'package:chathub/src/controller/models/userModel.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -9,7 +9,6 @@ class FirebaseServices {
   GoogleSignIn _googleSignIn = GoogleSignIn();
   static final FirebaseFirestore _db = FirebaseFirestore.instance;
   MyUser myuser;
-
 
   MyUser get currentUser => MyUser(
       displayName: _auth.currentUser.displayName ?? " ",
@@ -103,7 +102,6 @@ class FirebaseServices {
         .snapshots()
         .map((event) => event.docs)
         .map((snapdoc) => snapdoc.map((e) => e.data()).toList());
-    // print("Data from firebase : ${e.data()}");
   }
 
   setImageMsg({String url, String senderId, String recieverId}) async {

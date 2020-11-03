@@ -25,7 +25,6 @@ class _AnimatedSearchBarState extends State<AnimatedSearchBar> {
   void dispose() {
     // Clean up the focus node when the Form is disposed.
     myFocusNode.dispose();
-
     super.dispose();
   }
 

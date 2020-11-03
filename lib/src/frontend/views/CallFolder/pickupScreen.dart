@@ -1,5 +1,5 @@
 import 'package:chathub/src/controller/bloc/callBloc.dart';
-import 'package:chathub/src/controller/models/call.dart';
+import 'package:chathub/src/controller/models/callModel.dart';
 import 'package:chathub/src/controller/utils/premissions.dart';
 import 'package:chathub/src/frontend/views/CallFolder/CallScreen.dart';
 import 'package:chathub/src/frontend/widgets/cachedNetworkImage.dart';

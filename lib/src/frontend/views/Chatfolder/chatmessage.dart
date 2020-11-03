@@ -4,7 +4,7 @@ import 'package:chathub/src/backend/firebase_services.dart';
 import 'package:chathub/src/controller/bloc/callBloc.dart';
 import 'package:chathub/src/controller/bloc/chatBloc.dart';
 import 'package:chathub/src/controller/bloc/searchbloc.dart';
-import 'package:chathub/src/controller/models/message.dart';
+import 'package:chathub/src/controller/models/messageModel.dart';
 import 'package:chathub/src/controller/models/userModel.dart';
 import 'package:chathub/src/controller/styles/baseStyle.dart';
 import 'package:chathub/src/controller/styles/colorsStyle.dart';
