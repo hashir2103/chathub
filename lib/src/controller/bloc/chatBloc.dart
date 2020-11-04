@@ -3,6 +3,8 @@ import 'dart:async';
 
 import 'package:chathub/src/backend/firebase_services.dart';
 import 'package:chathub/src/backend/firebasestorage.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_native_image/flutter_native_image.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -12,6 +14,7 @@ class ChatBloc {
   //streamControllers
   final _imgUrl = BehaviorSubject<String>.seeded('');
   final _imgUploading = BehaviorSubject<bool>.seeded(false);
+  FirebaseServices firebaseServices = FirebaseServices();
 
   //stream getter
   Stream<String> get imgUrl => _imgUrl.stream;
@@ -42,6 +45,13 @@ class ChatBloc {
   }
 
   //Functions
+
+  Stream<QuerySnapshot> fetchContact({@required String userId}) =>
+      firebaseServices.fetchContacts(userId: userId);
+  Stream<QuerySnapshot> fetchLastMessageBetween(
+          {@required String senderId, @required String recieverId}) =>
+      firebaseServices.fetchLastMessageBetween(
+          senderId: senderId, recieverId: recieverId);
 
   pickImage(ImageSource source, {senderId, recieverId}) async {
     // ==> it will run if u not given permission if u already give this will skip
@@ -90,8 +100,8 @@ class ChatBloc {
             targetHeight: 600);
 
         changeImgUploading(true);
-        var imageUrl =
-            await storageService.uploadProductImage(file: compressedFile,senderId: senderId, recieverId: recieverId);
+        var imageUrl = await storageService.uploadProductImage(
+            file: compressedFile, senderId: senderId, recieverId: recieverId);
         _db.setImageMsg(
             url: imageUrl, senderId: senderId, recieverId: recieverId);
         changeNoImgUrl(imageUrl);

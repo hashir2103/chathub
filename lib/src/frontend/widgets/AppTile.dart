@@ -27,7 +27,7 @@ class AppTile extends StatelessWidget {
             radius: 25,
             foregroundColor: AppColor.separatorColor,
             backgroundColor: Colors.grey,
-            // backgroundImage: NetworkImage(avatarUrl)
+            backgroundImage: NetworkImage(avatarUrl)
           ),
           title: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -48,7 +48,7 @@ class AppTile extends StatelessWidget {
         ),
         Divider(
           thickness: 0.5,
-          color: Colors.black,
+          color: AppColor.dividerColor,
         )
       ],
     );

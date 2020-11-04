@@ -3,6 +3,7 @@ import 'package:chathub/src/backend/routes.dart';
 import 'package:chathub/src/controller/bloc/callBloc.dart';
 import 'package:chathub/src/controller/bloc/chatBloc.dart';
 import 'package:chathub/src/controller/bloc/searchbloc.dart';
+import 'package:chathub/src/controller/bloc/userbloc.dart';
 import 'package:chathub/src/controller/styles/colorsStyle.dart';
 import 'package:chathub/src/frontend/views/CallFolder/pickup_layout.dart';
 import 'package:chathub/src/frontend/views/HomeScreen.dart';
@@ -34,8 +35,10 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
+    // return MaterialApp();
     return MultiProvider(
         providers: [
+          ChangeNotifierProvider(create: (_)=> UserProvider()),
           Provider(create: (context) => FirebaseServices()),
           Provider(create: (context) => SearchBloc()),
           Provider(create: (context) => ChatBloc()),

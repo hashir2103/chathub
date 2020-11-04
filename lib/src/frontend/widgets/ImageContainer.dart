@@ -3,10 +3,11 @@ import 'package:chathub/src/controller/models/userModel.dart';
 import 'package:chathub/src/controller/styles/colorsStyle.dart';
 import 'package:chathub/src/controller/styles/textstyle.dart';
 import 'package:chathub/src/frontend/widgets/cachedNetworkImage.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class ImageContainer extends StatefulWidget {
-  final MyUser currentUser;
+  final User currentUser;
   final MyUser receiver;
   final Map message;
 

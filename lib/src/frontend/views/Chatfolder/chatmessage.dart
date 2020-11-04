@@ -4,6 +4,7 @@ import 'package:chathub/src/backend/firebase_services.dart';
 import 'package:chathub/src/controller/bloc/callBloc.dart';
 import 'package:chathub/src/controller/bloc/chatBloc.dart';
 import 'package:chathub/src/controller/bloc/searchbloc.dart';
+import 'package:chathub/src/controller/bloc/userbloc.dart';
 import 'package:chathub/src/controller/models/messageModel.dart';
 import 'package:chathub/src/controller/models/userModel.dart';
 import 'package:chathub/src/controller/styles/baseStyle.dart';
@@ -15,6 +16,7 @@ import 'package:chathub/src/frontend/widgets/AppTextField.dart';
 import 'package:chathub/src/frontend/widgets/ImageContainer.dart';
 import 'package:chathub/src/frontend/widgets/MyAppBar.dart';
 import 'package:chathub/src/frontend/widgets/messagecontainer.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
@@ -28,15 +30,13 @@ class ChatMessage extends StatefulWidget {
 }
 
 class _ChatMessageState extends State<ChatMessage> {
-  MyUser sender;
   FirebaseServices _db;
+  User sender;
   FocusNode focusNode;
   TextEditingController _controller = TextEditingController();
 
   @override
   void initState() {
-    _db = Provider.of<FirebaseServices>(context, listen: false);
-    sender = _db.currentUser;
     focusNode = FocusNode();
     super.initState();
   }
@@ -49,9 +49,13 @@ class _ChatMessageState extends State<ChatMessage> {
 
   @override
   Widget build(BuildContext context) {
+     _db = Provider.of<FirebaseServices>(context);
     var searchBloc = Provider.of<SearchBloc>(context);
     var callMethods = Provider.of<CallMethods>(context);
-    sender = _db.currentUser;
+    var user = Provider.of<UserProvider>(context);
+    setState(() {
+      sender = user.getUser;
+    });
     return PickupLayout(
       scaffold: Scaffold(
         appBar: appBar(context, searchBloc, callMethods),
@@ -102,7 +106,7 @@ class _ChatMessageState extends State<ChatMessage> {
                             onPressed: () {
                               chatBloc.pickImage(
                                 ImageSource.camera,
-                                senderId: sender.uid,
+                                senderId: sender,
                                 recieverId: widget.receiver.uid,
                               );
                               FocusScope.of(context).unfocus();
@@ -148,13 +152,13 @@ class _ChatMessageState extends State<ChatMessage> {
   sendMessage() {
     if (_controller.text.trim().isNotEmpty) {
       var timestamp = DateTime.now().toIso8601String();
-      var time = timestamp.split('T')[1].substring(0,5);
+      var time = timestamp.split('T')[1].substring(0, 5);
       Message message = Message(
           receiverId: widget.receiver.uid,
           senderId: sender.uid,
           message: _controller.text.trim(),
           time: time,
-          timestamp:timestamp );
+          timestamp: timestamp);
 
       _db.addMessageToDb(message, sender, widget.receiver);
       _controller.clear();

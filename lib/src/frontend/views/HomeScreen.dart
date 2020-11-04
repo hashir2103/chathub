@@ -1,22 +1,71 @@
+import 'package:chathub/src/backend/firebase_services.dart';
+import 'package:chathub/src/controller/bloc/userbloc.dart';
 import 'package:chathub/src/controller/styles/baseStyle.dart';
 import 'package:chathub/src/controller/styles/colorsStyle.dart';
+import 'package:chathub/src/controller/utils/userstate.dart';
 import 'package:chathub/src/frontend/views/CallFolder/callLogs.dart';
 import 'package:chathub/src/frontend/views/CallFolder/pickup_layout.dart';
 import 'package:chathub/src/frontend/views/Chatfolder/ChatScreen.dart';
 import 'package:chathub/src/frontend/views/contactFolder/ContactScreen.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
+import 'package:provider/provider.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
   _HomeScreenState createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
   Widget currentWidget = ChatScreen();
+  UserProvider userProvider;
+  final _auth = FirebaseServices();
   @override
   void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
     super.dispose();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addObserver(this);
+    SchedulerBinding.instance.addPostFrameCallback((timeStamp) {
+      userProvider = Provider.of<UserProvider>(context, listen: false);
+      userProvider.refreshUser();
+      _auth.setUserState(
+          userId: userProvider.getUserId, userState: UserState.Online);
+    });
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    String userId = userProvider.getUserId;
+    super.didChangeAppLifecycleState(state);
+    switch (state) {
+      case AppLifecycleState.resumed:
+        userId != null
+            ? _auth.setUserState(userId: userId, userState: UserState.Online)
+            : print('resumed state');
+        break;
+      case AppLifecycleState.inactive:
+        userId != null
+            ? _auth.setUserState(userId: userId, userState: UserState.Offline)
+            : print('inactive state');
+        break;
+      case AppLifecycleState.paused:
+        userId != null
+            ? _auth.setUserState(userId: userId, userState: UserState.Waiting)
+            : print('paused state');
+        break;
+      case AppLifecycleState.detached:
+        userId != null
+            ? _auth.setUserState(userId: userId, userState: UserState.Offline)
+            : print('detached state');
+        break;
+      default:
+    }
   }
 
   Widget build(BuildContext context) {
@@ -52,7 +101,7 @@ class _HomeScreenState extends State<HomeScreen> {
             switch (index) {
               case 0:
                 setState(() {
-                  currentWidget = CallLogs(); 
+                  currentWidget = CallLogs();
                 });
                 break;
               case 1:

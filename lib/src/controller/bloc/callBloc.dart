@@ -2,6 +2,7 @@ import 'package:chathub/src/controller/models/callModel.dart';
 import 'package:chathub/src/controller/models/userModel.dart';
 import 'package:chathub/src/frontend/views/CallFolder/CallScreen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class CallMethods {
@@ -42,12 +43,12 @@ class CallMethods {
     }
   }
 
-  dial({MyUser from, MyUser to, context}) async {
+  dial({User from, MyUser to, context}) async {
     var channeldata = await doc();
     Call call = Call(
       callerId: from.uid,
       callerName: from.displayName,
-      callerPic: from.photoUrl,
+      callerPic: from.photoURL,
       receiverId: to.uid,
       receiverName: to.displayName,
       receiverPic: to.photoUrl,

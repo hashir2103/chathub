@@ -1,5 +1,6 @@
 import 'package:chathub/src/backend/firebase_services.dart';
 import 'package:chathub/src/controller/bloc/searchbloc.dart';
+import 'package:chathub/src/controller/bloc/userbloc.dart';
 import 'package:chathub/src/controller/styles/baseStyle.dart';
 import 'package:chathub/src/controller/styles/colorsStyle.dart';
 import 'package:chathub/src/controller/styles/textstyle.dart';
@@ -8,12 +9,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class AppAppBar extends StatefulWidget implements PreferredSizeWidget {
-  final String displayName;
-  const AppAppBar({
-    Key key,
-    @required this.displayName,
-  }) : super(key: key);
-
   @override
   Size get preferredSize => Size.fromHeight(kToolbarHeight + 25);
   @override
@@ -24,6 +19,8 @@ class _AppAppBarState extends State<AppAppBar> {
   @override
   Widget build(BuildContext context) {
     var searchBloc = Provider.of<SearchBloc>(context);
+    final userProvider = Provider.of<UserProvider>(context);
+    String name = userProvider.getUserNameFirstLetter;
     var db = Provider.of<FirebaseServices>(context);
     return StreamBuilder<bool>(
         stream: searchBloc.foldSearchBar,
@@ -35,7 +32,7 @@ class _AppAppBarState extends State<AppAppBar> {
               padding: EdgeInsets.all(BaseStyle.appBarPadding),
               decoration: BoxDecoration(
                   border: Border(
-                bottom: BorderSide(width: 1.4, style: BorderStyle.solid),
+                bottom: BorderSide(width: 0.5, style: BorderStyle.solid ,  color: AppColor.dividerColor),
               )),
               child: (folded)
                   ? AppBar(
@@ -57,7 +54,7 @@ class _AppAppBarState extends State<AppAppBar> {
                           child: CircleAvatar(
                               radius: 25,
                               backgroundColor: AppColor.separatorColor,
-                              child: Text(widget.displayName[0] ?? " ",
+                              child: Text(name ?? " ",
                                   style: TextStyles.chatAppBarTitle)),
                         ),
                       ]),
