@@ -31,9 +31,9 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
-    SchedulerBinding.instance.addPostFrameCallback((timeStamp) {
+    SchedulerBinding.instance.addPostFrameCallback((timeStamp) async{
       userProvider = Provider.of<UserProvider>(context, listen: false);
-      userProvider.refreshUser();
+      await userProvider.refreshUser();
       _auth.setUserState(
           userId: userProvider.getUserId, userState: UserState.Online);
     });
@@ -56,7 +56,7 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
         break;
       case AppLifecycleState.paused:
         userId != null
-            ? _auth.setUserState(userId: userId, userState: UserState.Waiting)
+            ? _auth.setUserState(userId: userId, userState: UserState.Offline)
             : print('paused state');
         break;
       case AppLifecycleState.detached:

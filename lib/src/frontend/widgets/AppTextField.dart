@@ -20,7 +20,7 @@ class AppTextField extends StatefulWidget {
   var suffixIcon;
 
   AppTextField({
-    @required this.hintText,
+    this.hintText,
     this.prefixIcon,
     this.suffixIcon,
     this.textInputType = TextInputType.text,
@@ -65,7 +65,7 @@ class _AppTextFieldState extends State<AppTextField> {
   void dispose() {
     widget.controller.dispose();
     // _focusNode.removeListener(_handleFocusChange);
-    widget.focusNode.dispose();
+    // widget.focusNode.dispose();
     super.dispose();
   }
 
@@ -74,6 +74,8 @@ class _AppTextFieldState extends State<AppTextField> {
     return Padding(
       padding: BaseStyle.textFieldPadding,
       child: TextField(
+        
+        maxLines: null,
         focusNode: widget.focusNode,
         controller: widget.controller,
         keyboardType: widget.textInputType,

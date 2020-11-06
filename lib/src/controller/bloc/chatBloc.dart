@@ -13,11 +13,16 @@ import 'package:rxdart/rxdart.dart';
 class ChatBloc {
   //streamControllers
   final _imgUrl = BehaviorSubject<String>.seeded('');
+  final _editImage = BehaviorSubject<String>();
+  final _displayName = BehaviorSubject<String>();
   final _imgUploading = BehaviorSubject<bool>.seeded(false);
   FirebaseServices firebaseServices = FirebaseServices();
 
   //stream getter
   Stream<String> get imgUrl => _imgUrl.stream;
+  Stream<String> get editImg => _editImage.stream;
+  Stream<String> get displayName => _displayName.stream;
+
   Stream<bool> get imgUploading => _imgUploading.stream;
   Stream<bool> get imgloading =>
       CombineLatestStream.combine2(imgUrl, imgUploading, (a, b) {
@@ -29,6 +34,8 @@ class ChatBloc {
 
   //stream setter
   Function(String) get changeNoImgUrl => _imgUrl.sink.add;
+  Function(String) get changeDisplayName => _displayName.sink.add;
+  Function(String) get changeditImgUrl => _editImage.sink.add;
   Function(bool) get changeImgUploading => _imgUploading.sink.add;
 
   // varaibles
@@ -42,9 +49,15 @@ class ChatBloc {
   dispose() {
     _imgUrl.close();
     _imgUploading.close();
+    _editImage.close();
+    _displayName.close();
   }
 
   //Functions
+
+  Future<void> editDisplayName(String userId, String name) async {
+    _db.editDisplayName(userId: userId, name: name);
+  }
 
   Stream<QuerySnapshot> fetchContact({@required String userId}) =>
       firebaseServices.fetchContacts(userId: userId);
@@ -100,7 +113,7 @@ class ChatBloc {
             targetHeight: 600);
 
         changeImgUploading(true);
-        var imageUrl = await storageService.uploadProductImage(
+        var imageUrl = await storageService.sendImages(
             file: compressedFile, senderId: senderId, recieverId: recieverId);
         _db.setImageMsg(
             url: imageUrl, senderId: senderId, recieverId: recieverId);
@@ -111,6 +124,60 @@ class ChatBloc {
       }
     } else {
       print("Grant Premission an try again");
+    }
+  }
+
+  editImage(ImageSource source, String userID) async {
+    await Permission.photos.request();
+    await Permission.camera.request();
+
+    //we have to check permission for ios it work fine with android but in ios program doesnt know where u left of.
+    var permissionStatus = [
+      await Permission.photos.status,
+      await Permission.camera.status
+    ];
+    PickedFile image;
+    // ignore: unused_local_variable
+    // File croppedFile;
+    if (permissionStatus[0].isGranted || permissionStatus[1].isGranted) {
+      image = await _picker.getImage(source: source);
+      if (image != null) {
+        // //getting image properties
+        // ImageProperties properties =
+        //     await FlutterNativeImage.getImageProperties(image.path);
+
+        // //crop image
+        // //portrait
+        // if (properties.height > properties.width) {
+        //   var yOffset = (properties.height - properties.width) / 2;
+        //   croppedFile = await FlutterNativeImage.cropImage(image.path, 0,
+        //       yOffset.toInt(), properties.width, properties.width);
+        // }
+        // //landscape
+        // else if (properties.width > properties.height) {
+        //   var xOffset = (properties.width - properties.height) / 2;
+        //   croppedFile = await FlutterNativeImage.cropImage(image.path,
+        //       xOffset.toInt(), 0, properties.height, properties.height);
+        // }
+        // //already squared
+        // else {
+        //   croppedFile = File(image.path);
+        // }
+
+        //Resize
+        File compressedFile = await FlutterNativeImage.compressImage(
+          image.path,
+          quality: 100,
+          // targetWidth: 600,
+          // targetHeight: 600
+        );
+
+        changeImgUploading(true);
+        var imgURL = await storageService.editProfileImage(
+            file: compressedFile, senderId: userID);
+        await _db.editProfileImage(userId: userID, imgURL: imgURL);
+        changeditImgUrl(imgURL);
+      }
     }
   }
 }

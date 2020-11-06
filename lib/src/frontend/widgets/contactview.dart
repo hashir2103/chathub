@@ -4,6 +4,7 @@ import 'package:chathub/src/controller/bloc/userbloc.dart';
 import 'package:chathub/src/controller/models/contactModel.dart';
 import 'package:chathub/src/controller/models/userModel.dart';
 import 'package:chathub/src/controller/styles/colorsStyle.dart';
+import 'package:chathub/src/controller/styles/textstyle.dart';
 import 'package:chathub/src/frontend/widgets/lastmessageContainer.dart';
 import 'package:chathub/src/frontend/widgets/onlinedotIndicator.dart';
 import 'package:flutter/material.dart';
@@ -45,7 +46,6 @@ class ViewLayout extends StatelessWidget {
   Widget build(BuildContext context) {
     final UserProvider userProvider = Provider.of<UserProvider>(context);
     final chatBloc = Provider.of<ChatBloc>(context);
-
     return Column(
       children: [
         ListTile(
@@ -55,8 +55,7 @@ class ViewLayout extends StatelessWidget {
             (contact != null ? contact.displayName : null) != null
                 ? contact.displayName
                 : "..",
-            style: TextStyle(
-                color: Colors.white, fontFamily: "Arial", fontSize: 19),
+            style: TextStyles.appTileTitle,
           ),
           subtitle: LastMessageContainer(
             stream: chatBloc.fetchLastMessageBetween(

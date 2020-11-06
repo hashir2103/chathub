@@ -43,7 +43,7 @@ class _ChatMessageState extends State<ChatMessage> {
 
   @override
   void dispose() {
-    // focusNode.dispose();
+    focusNode.dispose();
     super.dispose();
   }
 
@@ -242,6 +242,7 @@ class _ChatMessageState extends State<ChatMessage> {
         children: [
           CircleAvatar(
             backgroundColor: AppColor.userCircleBackground,
+            backgroundImage: NetworkImage(widget.receiver.photoUrl),
             radius: BaseStyle.avatarRadius - 5,
           ),
           SizedBox(
@@ -250,6 +251,7 @@ class _ChatMessageState extends State<ChatMessage> {
           Text(
             widget.receiver.displayName ?? ' ',
             style: TextStyles.chatAppBarTitle,
+            overflow: TextOverflow.fade,
           ),
         ],
       ),

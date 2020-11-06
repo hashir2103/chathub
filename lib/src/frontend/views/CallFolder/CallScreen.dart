@@ -257,7 +257,7 @@ class _CallScreenState extends State<CallScreen> {
   Widget _expandedVideoRow(List<Widget> views) {
     final wrappedViews = views.map<Widget>(_videoView).toList();
     return Expanded(
-      child: Row(
+       child:Row(
         children: wrappedViews,
       ),
     );

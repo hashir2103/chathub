@@ -37,8 +37,8 @@ class _AnimatedSearchBarState extends State<AnimatedSearchBar> {
           if (!snapshot.hasData) return Container();
           bool _folded = snapshot.data;
           return AnimatedContainer(
+            duration: Duration(milliseconds:400 ),
             margin: EdgeInsets.symmetric(horizontal: 3, vertical: 1.5),
-            duration: Duration(milliseconds: 400),
             width: _folded ? 56 : MediaQuery.of(context).size.width / 1.1,
             height: 56,
             decoration: BoxDecoration(

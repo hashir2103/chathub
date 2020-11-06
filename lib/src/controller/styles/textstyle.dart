@@ -17,6 +17,11 @@ abstract class TextStyles {
         textStyle:
             TextStyle(color: AppColor.iconColors, fontWeight: FontWeight.bold));
   }
+  static TextStyle get profileButton {
+    return GoogleFonts.poppins(
+        textStyle:
+            TextStyle(color: AppColor.iconColors,fontSize: 25));
+  }
 
   static TextStyle get appTileSubtilte {
     return TextStyle(
@@ -27,7 +32,7 @@ abstract class TextStyles {
 
   static TextStyle get chatAppBarTitle {
     return GoogleFonts.roboto(
-        textStyle: TextStyle(color: Colors.white, fontSize: 18.0));
+        textStyle: TextStyle(color: Colors.white, fontSize: 14.0));
   }
 
   static TextStyle get message {

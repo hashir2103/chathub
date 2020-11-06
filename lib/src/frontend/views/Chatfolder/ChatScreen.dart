@@ -2,7 +2,6 @@ import 'package:chathub/src/controller/bloc/chatBloc.dart';
 import 'package:chathub/src/controller/bloc/searchbloc.dart';
 import 'package:chathub/src/controller/bloc/userbloc.dart';
 import 'package:chathub/src/controller/models/contactModel.dart';
-import 'package:chathub/src/controller/styles/baseStyle.dart';
 import 'package:chathub/src/controller/styles/colorsStyle.dart';
 import 'package:chathub/src/controller/styles/textstyle.dart';
 import 'package:chathub/src/frontend/views/CallFolder/pickup_layout.dart';
@@ -33,28 +32,29 @@ class ChatScreen extends StatelessWidget {
                         (snapshot.data) ? SearchScreen() : Container()
                       ],
                     ),
-              floatingActionButton: (snapshot.data)
-                  ? Container()
-                  : FloatingActionButton(
-                      elevation: 1,
-                      backgroundColor: AppColor.separatorColor,
-                      foregroundColor: AppColor.iconColors,
-                      child: Icon(
-                        Icons.edit,
-                        size: BaseStyle.iconSize,
-                      ),
-                      // mini: true,
-                      tooltip: "Start New Chat",
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.all(
-                              Radius.circular(BaseStyle.borderRaduis))),
-                      onPressed: () {}),
+              // floatingActionButton: (snapshot.data)
+              //     ? Container()
+              //     : FloatingActionButton(
+              //         elevation: 1,
+              //         backgroundColor: AppColor.separatorColor,
+              //         foregroundColor: AppColor.iconColors,
+              //         child: Icon(
+              //           Icons.edit,
+              //           size: BaseStyle.iconSize,
+              //         ),
+              //         // mini: true,
+              //         tooltip: "Start New Chat",
+              //         shape: RoundedRectangleBorder(
+              //             borderRadius: BorderRadius.all(
+              //                 Radius.circular(BaseStyle.borderRaduis))),
+              //         onPressed: () {}),
             ),
           );
         });
   }
 
   Widget chatContainer(context) {
+
     var chatBloc = Provider.of<ChatBloc>(context);
     var user = Provider.of<UserProvider>(context);
     var userId = user.getUserId;

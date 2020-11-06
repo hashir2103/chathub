@@ -7,7 +7,7 @@ class FirebaseStorageService {
 
   final storage = FirebaseStorage.instance;
 
-  Future<String> uploadProductImage(
+  Future<String> sendImages(
       {@required File file,String senderId, String recieverId}) async {
     try {
       var snapshot = await storage
@@ -23,4 +23,22 @@ class FirebaseStorageService {
       return null;
     }
   }
+
+  Future<String> editProfileImage(
+      {@required File file,String senderId}) async {
+    try {
+      var snapshot = await storage
+          .ref()
+          .child('$senderId/${DateTime.now()}')
+          .putFile(file)
+          .onComplete;
+
+      //this will give public url for image
+      return await snapshot.ref.getDownloadURL();
+    } catch (e) {
+      print('======$e=======');
+      return null;
+    }
+  }
+
 }

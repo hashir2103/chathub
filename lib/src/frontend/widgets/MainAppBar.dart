@@ -1,12 +1,15 @@
 import 'package:chathub/src/backend/firebase_services.dart';
+import 'package:chathub/src/controller/bloc/chatBloc.dart';
 import 'package:chathub/src/controller/bloc/searchbloc.dart';
 import 'package:chathub/src/controller/bloc/userbloc.dart';
 import 'package:chathub/src/controller/styles/baseStyle.dart';
 import 'package:chathub/src/controller/styles/colorsStyle.dart';
-import 'package:chathub/src/controller/styles/textstyle.dart';
 import 'package:chathub/src/frontend/widgets/AnimatedSearchBar.dart';
+import 'package:chathub/src/frontend/widgets/userDetailContainer.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
+import 'cachedNetworkImage.dart';
 
 class AppAppBar extends StatefulWidget implements PreferredSizeWidget {
   @override
@@ -19,9 +22,9 @@ class _AppAppBarState extends State<AppAppBar> {
   @override
   Widget build(BuildContext context) {
     var searchBloc = Provider.of<SearchBloc>(context);
-    final userProvider = Provider.of<UserProvider>(context);
-    String name = userProvider.getUserNameFirstLetter;
+    final user = Provider.of<UserProvider>(context);
     var db = Provider.of<FirebaseServices>(context);
+    var chatBloc = Provider.of<ChatBloc>(context);
     return StreamBuilder<bool>(
         stream: searchBloc.foldSearchBar,
         builder: (context, snapshot) {
@@ -32,7 +35,10 @@ class _AppAppBarState extends State<AppAppBar> {
               padding: EdgeInsets.all(BaseStyle.appBarPadding),
               decoration: BoxDecoration(
                   border: Border(
-                bottom: BorderSide(width: 0.5, style: BorderStyle.solid ,  color: AppColor.dividerColor),
+                bottom: BorderSide(
+                    width: 0.5,
+                    style: BorderStyle.solid,
+                    color: AppColor.dividerColor),
               )),
               child: (folded)
                   ? AppBar(
@@ -48,16 +54,29 @@ class _AppAppBarState extends State<AppAppBar> {
                             db.logout();
                             Navigator.pushReplacementNamed(context, '/login');
                           }),
-                      title: Stack(children: [
-                        Align(
+                      title: GestureDetector(
+                        onTap: () => userProfile(context),
+                        child: Align(
                           alignment: Alignment.center,
-                          child: CircleAvatar(
-                              radius: 25,
-                              backgroundColor: AppColor.separatorColor,
-                              child: Text(name ?? " ",
-                                  style: TextStyles.chatAppBarTitle)),
+                          child: StreamBuilder<String>(
+                              initialData: user.getPhotoURL,
+                              stream: chatBloc.editImg,
+                              builder: (context, snapshot) {
+                                if (!snapshot.hasData) {
+                                  return CachedImage(
+                                  user.getPhotoURL,
+                                  isRound: true,
+                                  radius: BaseStyle.avatarRadius+ 25,
+                                );
+                                }
+                                return CachedImage(
+                                  snapshot.data,
+                                  isRound: true,
+                                  radius: BaseStyle.avatarRadius+25,
+                                );
+                              }),
                         ),
-                      ]),
+                      ),
                       actions: [
                         IconButton(
                             color: AppColor.iconColors,
@@ -69,14 +88,14 @@ class _AppAppBarState extends State<AppAppBar> {
                             onPressed: () {
                               searchBloc.changeFoldSearchBar(false);
                             }),
-                        IconButton(
-                            color: AppColor.iconColors,
-                            icon: Icon(
-                              Icons.more_vert,
-                              color: AppColor.iconColors,
-                              size: BaseStyle.iconSize,
-                            ),
-                            onPressed: () {}),
+                        // IconButton(
+                        //     color: AppColor.iconColors,
+                        //     icon: Icon(
+                        //       Icons.more_vert,
+                        //       color: AppColor.iconColors,
+                        //       size: BaseStyle.iconSize,
+                        //     ),
+                        //     onPressed: () {}),
                       ],
                       centerTitle: true,
                     )
@@ -84,5 +103,14 @@ class _AppAppBarState extends State<AppAppBar> {
                       child: AnimatedSearchBar(),
                       onWillPop: () => searchBloc.changeFoldSearchBar(true)));
         });
+  }
+
+  userProfile(context) {
+    return showModalBottomSheet(
+        context: context,
+        backgroundColor: AppColor.blackColor,
+        isScrollControlled: true,
+        builder: (context) =>
+            SingleChildScrollView(child: UserDetailContainer()));
   }
 }

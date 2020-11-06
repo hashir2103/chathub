@@ -1,5 +1,6 @@
 import 'package:chathub/src/backend/firebase_services.dart';
 import 'package:chathub/src/backend/routes.dart';
+import 'package:chathub/src/controller/bloc/CallLogBloc.dart';
 import 'package:chathub/src/controller/bloc/callBloc.dart';
 import 'package:chathub/src/controller/bloc/chatBloc.dart';
 import 'package:chathub/src/controller/bloc/searchbloc.dart';
@@ -38,11 +39,12 @@ class _MyAppState extends State<MyApp> {
     // return MaterialApp();
     return MultiProvider(
         providers: [
-          ChangeNotifierProvider(create: (_)=> UserProvider()),
+          ChangeNotifierProvider(create: (_) => UserProvider()),
           Provider(create: (context) => FirebaseServices()),
           Provider(create: (context) => SearchBloc()),
           Provider(create: (context) => ChatBloc()),
           Provider(create: (context) => CallMethods()),
+          Provider(create: (context) => LogBloc()),
         ],
         child: MaterialApp(
           theme: ThemeData(

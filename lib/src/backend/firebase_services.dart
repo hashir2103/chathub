@@ -211,6 +211,23 @@ class FirebaseServices {
     });
   }
 
+  Future<void> editProfileImage(
+      {@required String userId, @required String imgURL}) async {
+    var user = getUserDetail();
+    user.updateProfile(photoURL: imgURL);
+    _db.collection("users").doc(userId).update({
+      "photoUrl": imgURL,
+    });
+  }
+  Future<void> editDisplayName(
+      {@required String userId, @required String name}) async {
+    var user = getUserDetail();
+    user.updateProfile(displayName:name);
+    _db.collection("users").doc(userId).update({
+      "displayName": name,
+    });
+  }
+
   Stream<DocumentSnapshot> getUserStream({@required String uid}) =>
       _db.collection("users").doc(uid).snapshots();
 }

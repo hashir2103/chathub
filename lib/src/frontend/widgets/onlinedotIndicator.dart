@@ -22,7 +22,7 @@ class OnlineDotIndicator extends StatelessWidget {
         case UserState.Online:
           return Colors.green;
         default:
-          return Colors.orange;
+          return Colors.red;
       }
     }
 
